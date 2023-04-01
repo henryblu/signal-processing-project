@@ -1,4 +1,5 @@
 import argparse
+from data_processing import get_data
 
 def print_help():
     print(
@@ -13,7 +14,7 @@ def print_help():
         -t, --test [optional] runs the test suite
         """
     ) 
-def flags():
+def flags_finder():
     # Parse command line arguments 
     parser = argparse.ArgumentParser()
     parser.add_argument("-H", "--helper", help="prints the help message", action="store_true")
@@ -26,17 +27,26 @@ def flags():
     if args.helper:
         print_help()
         return
+
     return args
 
+
+    
 def main():
-    #first we look for all the flags that have been set 
-    flags = flags()
+    # first we look for all the flags that have been set 
+    flags = flags_finder()
+    # now we load the load the sound wave file
+    try:
+        sample_rate, audio_data = get_data(flags.file)
+    except TypeError:
+        print("file not found")
+        exit
+
+    # now we grpah the sound wave
     
 
 
 
-    
 
 if __name__ == "__main__":
-
     main()
