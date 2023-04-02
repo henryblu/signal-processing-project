@@ -1,5 +1,7 @@
 import argparse
 from data_processing import get_data
+from visualisations import plot_sound_wave
+from Fourier import discrete_fourier_transform
 
 def print_help():
     print(
@@ -41,8 +43,12 @@ def main():
     except TypeError:
         print("file not found")
         exit
-
     # now we grpah the sound wave
+    plot_sound_wave(sample_rate, audio_data)
+    
+    # now we perform the fourier transform
+
+
     
 
 
