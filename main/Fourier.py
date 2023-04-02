@@ -27,6 +27,7 @@ def fast_fourier_transform(audio_data):
 
     # now we clean up the sound wave to have only frequencies smaller then 20000 and positive amplitudes
     fourier_transform = np.abs(fourier_transform)
+    
     # this isnt working yet and I cant seem to figure out whats wrong. will try again later
     # fourier_transform = fourier_transform[:len(fourier_transform)//2]
     
