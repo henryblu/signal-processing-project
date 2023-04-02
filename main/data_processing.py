@@ -6,8 +6,12 @@ def get_data(audio_file_path):
             for now this only works with .wav files
     '''
     if not audio_file_path:
-        # if no file is specified then we use the default file
-        sample_rate, audio_data = wav.read("Data\StarWars3.wav")
+        # if no file is specified then we use the default file this try exept is a workaround for the fact that the file is in a different location when running the tests and debugging
+        try:
+            sample_rate, audio_data = wav.read("main\Data\StarWars3.wav")
+        except FileNotFoundError: 
+            sample_rate, audio_data = wav.read("Data\StarWars3.wav")
+
     else:
         try:
             sample_rate, audio_data = wav.read(audio_file_path)
