@@ -4,15 +4,17 @@ from visualisations import *
 from Fourier import *
 
 def print_help():
+    # prints the help message
     print(
         """
         This program performs simple noise reduction on a given sound wave.
 
         Flags:
-        -h, --help: Prints this help message.
-        -f, --file: [optional] Specifies the sound wave file to be read default is sound wave provided.
+        -H, --helper: Prints this help message.
+        -i, --input: [optional] specifies the .wav sound wave file to be read. Default is sound wave provided.
         -o, --output: [optional] Specifies the file to be written to default is output.csv
-        -F, --fourier: [optional] shows the fourier transform of the sound wave as a graph
+        -fft, --fast_fourier_transform: [optional] performs a fast fourier transform on the data
+        -dft, --discrete_fourier_transform: [optional] performs a discrete fourier transform on the data
         -t, --test [optional] runs the test suite
         """
     ) 
@@ -20,9 +22,8 @@ def flags_finder():
     # Parse command line arguments 
     parser = argparse.ArgumentParser()
     parser.add_argument("-H", "--helper", help="prints the help message", action="store_true")
-    parser.add_argument("-i", "--input", help="specifies the sound wave file to be read default is sound wave provided")
+    parser.add_argument("-i", "--input", help="specifies the .wav sound wave file to be read. Default is sound wave provided")
     parser.add_argument("-o", "--output", help="specifies the file to be written to default is output.csv")
-    parser.add_argument("-g", "--graphs", help="shows the fourier transform of the sound wave as a graph", action="store_true")
     parser.add_argument("-fft", "--fast_fourier_transform", help="performs a fast fourier transform on the data", action="store_true")
     parser.add_argument("-dft", "--discrete_fourier_transform", help="performs a discrete fourier transform on the data", action="store_true")
     parser.add_argument("-t", "--test", help="runs the  test suite", action="store_true")
@@ -66,18 +67,17 @@ def main():
 
 
     # now we plot the fourier transform if the flag is set
-    if flags.graphs:
-        plot_fourier_transform(fourier_transform)
+    plot_fourier_transform(fourier_transform)
 
     # now we perform noise reduction on the fourier transform
-    # this it to be implemented
+        # this it to be implemented
 
     # now we transform the fourier transform back into a sound wave using the inverse fourier transform
     new_audio_data = inverse_fast_fourier_transform(fourier_transform)
 
     # now we plot the new sound wave
     plot_sound_wave(sample_rate, new_audio_data)
-    
+
 
 
     
