@@ -18,6 +18,12 @@ def plot_sound_wave(sample_rate, audio_data):
 def plot_fourier_transform(fourier_transform):
     ''' this function plots the fourier transform of a given audio data
     '''
+    fourier_transform = fourier_transform[:len(fourier_transform)//2]
+    try:
+        fourier_transform = fourier_transform[:20000]
+    except IndexError:
+        fourier_transform = np.abs(fourier_transform)
+        
     plt.plot(fourier_transform)
     plt.xlabel("Frequency (hz)")
     plt.ylabel("Amplitude")
