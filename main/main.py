@@ -1,5 +1,5 @@
 import argparse
-from data_processing import get_data
+from data_processing import *
 from visualisations import *
 from Fourier import *
 
@@ -18,12 +18,14 @@ def print_help():
         -t, --test [optional] runs the test suite
         """
     ) 
+
 def flags_finder():
     # Parse command line arguments 
     parser = argparse.ArgumentParser()
     parser.add_argument("-H", "--helper", help="prints the help message", action="store_true")
     parser.add_argument("-i", "--input", help="specifies the .wav sound wave file to be read. Default is sound wave provided")
     parser.add_argument("-o", "--output", help="specifies the file to be written to default is output.csv")
+    parser.add_argument("-d", "--details", help="prints the details of the algrithm including time taken and memory taken", action="store_true")
     parser.add_argument("-fft", "--fast_fourier_transform", help="performs a fast fourier transform on the data", action="store_true")
     parser.add_argument("-dft", "--discrete_fourier_transform", help="performs a discrete fourier transform on the data", action="store_true")
     parser.add_argument("-t", "--test", help="runs the  test suite", action="store_true")
@@ -35,29 +37,27 @@ def flags_finder():
 
     return args
 
-
-    
 def main():
     # first we look for all the flags that have been set 
     flags = flags_finder()
     # now we load the load the sound wave file
     try:
-        sample_rate, audio_data = get_data(flags.input)
+        sample_rate, og_audio_data = get_data(flags.input)
     except TypeError:
         print("file not found")
         exit
     # now we grpah the sound wave
-    plot_sound_wave(sample_rate, audio_data)
+    #plot_sound_wave(sample_rate, og_audio_data)
     
     # now we perform the fourier transform or fast fourier transform on the wave
     if flags.discrete_fourier_transform:
-        fourier_transform = discrete_fourier_transform(audio_data)
+        fourier_transform = discrete_fourier_transform(og_audio_data)
     elif flags.fast_fourier_transform:
-        fourier_transform = fast_fourier_transform(audio_data)
+        fourier_transform = fast_fourier_transform(og_audio_data)
     else: 
         # for testing purposes we will use the fast fourier transform for now
         # the discrete fourier transform is working but it is very slow
-        fourier_transform = fast_fourier_transform(audio_data)
+        fourier_transform = fast_fourier_transform(og_audio_data)
 
     '''
     else: 
@@ -67,7 +67,7 @@ def main():
 
 
     # now we plot the fourier transform if the flag is set
-    plot_fourier_transform(fourier_transform)
+    #plot_fourier_transform(fourier_transform)
 
     # now we perform noise reduction on the fourier transform
         # this it to be implemented
@@ -76,12 +76,15 @@ def main():
     new_audio_data = inverse_fast_fourier_transform(fourier_transform)
 
     # now we plot the new sound wave
-    plot_sound_wave(sample_rate, new_audio_data)
+    #plot_sound_wave(sample_rate, new_audio_data)
 
+    # now we plot all the graphs side by side
+    plot_all(sample_rate, og_audio_data, new_audio_data, fourier_transform)
 
-
+    # now we write the new sound wave to a file stored in data folder
+    output(sample_rate, new_audio_data, flags.output)
     
-
+    #output(sample_rate, new_audio_data)
 
 
 if __name__ == "__main__":
