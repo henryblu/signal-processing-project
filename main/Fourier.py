@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from scipy import fftpack
 
 
 def discrete_fourier_transform(audio_data):
@@ -25,9 +26,6 @@ def fast_fourier_transform(audio_data):
         fourier_transform[k] = even[k] + np.exp(-2j*np.pi*k/N)*odd[k]
         fourier_transform[k+N//2] = even[k] - np.exp(-2j*np.pi*k/N)*odd[k]
 
-    # now we clean up the sound wave to have only frequencies smaller then 20000 and positive amplitudes
-    fourier_transform = np.abs(fourier_transform)
-    
     # this isnt working yet and I cant seem to figure out whats wrong. will try again later
     # fourier_transform = fourier_transform[:len(fourier_transform)//2]
     
@@ -36,6 +34,7 @@ def fast_fourier_transform(audio_data):
 def inverse_fast_fourier_transform(fourier_transform):
     ''' this function performs an inverse fast fourier transform on a given fourier transform
     '''
+    #new_sound_wave = fftpack.ifft(fourier_transform)
     N = len(fourier_transform)
     if N <= 1:
         return fourier_transform
@@ -46,5 +45,8 @@ def inverse_fast_fourier_transform(fourier_transform):
         audio_data[k] = even[k] + np.exp(2j*np.pi*k/N)*odd[k]
         audio_data[k+N//2] = even[k] - np.exp(2j*np.pi*k/N)*odd[k]
     return audio_data
+
+    #return new_sound_wave
+
 
     
