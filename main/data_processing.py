@@ -1,6 +1,9 @@
 import numpy as np
 from scipy.io import wavfile as wav
 
+
+
+
 def get_data(audio_file_path):
     ''' this function is used to convert the audiofile to a numpy array
             for now this only works with .wav files
@@ -21,6 +24,8 @@ def get_data(audio_file_path):
 def output(sample_rate,new_sound_wave, output_file_path):
     ''' this function is used to output the new sound wave to a file with default path: main\Data\output.wav
     '''
+    # not working right now 
+    
     if(output_file_path == None):
         # if no file is specified then we use the default file this try exept is a workaround for the fact that the file is in a different location when running the tests and debugging
         try:
