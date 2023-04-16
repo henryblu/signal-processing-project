@@ -31,9 +31,6 @@ def fast_fourier_transform(audio_data):
     
     return np.concatenate([even + factor[:N//2]*odd, even + factor[N//2:]*odd])
 
-
-
-
 def inverse_regular_fourier_transform(fourier_transform):
     ''' this function performs an inverse regular fourier transform on a given fourier transform
     '''
