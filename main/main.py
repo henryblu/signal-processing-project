@@ -1,9 +1,9 @@
 import argparse
 from data_processing import *
 from visualisations import *
-from fourier import *
+from transforms import *
 from noise_reduction import *
-from tests.test_transforms import *
+from tests.performance_test import *
 from scipy import fftpack
 
 
@@ -34,15 +34,15 @@ def print_help():
 def flags_finder():
     # Parse command line arguments 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-H", "--helper", help="prints the help message", action="store_true")
+    parser.add_argument("-H", "--helper", help="prints a more detailed help message", action="store_true")
     parser.add_argument("-i", "--input", help="specifies the .wav sound wave file to be read. Default is sound wave provided")
     parser.add_argument("-o", "--output", help="specifies the file to be written to default is output.csv")
-    parser.add_argument("-d", "--details", help="prints the details of the algrithm including time taken and memory taken", action="store_true")
+    #parser.add_argument("-d", "--details", help="prints the details of the algrithm including time taken and memory taken", action="store_true")
     parser.add_argument("-fft", "--fast_fourier_transform", help="performs a fast fourier transform on the data", action="store_true")
     parser.add_argument("-rft", "--regular_fourier_transform", help="performs a regular fourier transform on the data", action="store_true")
-    parser.add_argument("-t", "--test", help="runs the basic test suite. You may input a positive integer to specify number of tests you want to run", type=int, default=0)
-    parser.add_argument("-twd", "--test_with_details", help="prints the details of the test suite including time taken and memory taken. You may input a positive integer to specify number of tests you want to run", type=int, default=0)
-    parser.add_argument("-th", "--threadshold", help="specifies the threadshold level for the noise reduction, default is 0", type=int, default=0)
+    parser.add_argument("-t", "--performance_test", help="runs the basic test suite. You may input a positive integer to specify number of tests you want to run", type=int, default=0)
+    parser.add_argument("-twd", "--performance_test_with_details", help="prints the details of the test suite including time taken and memory taken. You may input a positive integer to specify number of tests you want to run", type=int, default=0)
+    #parser.add_argument("-th", "--threadshold", help="specifies the threadshold level for the noise reduction, default is 0", type=int, default=0)
     args = parser.parse_args()
 
     if args.helper:
@@ -51,7 +51,7 @@ def flags_finder():
 
     return args
 
-def test_caller(test = 0, test_with_details = 0):
+def perfromance_test_caller(test = 0, test_with_details = 0):
     ''' this function is used to call the appropreate test suite when a test flag is set
     '''
     
@@ -63,41 +63,51 @@ def test_caller(test = 0, test_with_details = 0):
 
 
     if test != 0 :
-        test_suite = unit_test(samples = test)
+        test_suite = performance_test(samples = test)
 
     elif test_with_details != 0:
-        test_suite = unit_test(samples = test_with_details, details = True)
+        test_suite = performance_test(samples = test_with_details, details = True)
 
     # request input for algorithm to test
     while True:
         imput = input("Please enter the algorithm you would like to test (options:'rft', 'fft', 'irft', 'ifft', 'all'): ")
+        print()
         if imput == "rft":
             test_suite.rft_test()
-            exit
+            return
         elif imput == "fft":
             test_suite.fft_test()
-            exit
+            return
         elif imput == "irft":
             test_suite.irft_test()
-            exit
+            return
         elif imput == "ifft":
             test_suite.ifft_test()
-            exit
+            return
         elif imput == "all":
+            
             test_suite.fft_test()
+            print()
             test_suite.rft_test()
+            print()
             test_suite.ifft_test()
+            print()
             test_suite.irft_test()
-            exit
+            return
         else:
             print("Invalid input")
+        
 
 def main():
     # first we look for all the flags that have been set 
     flags = flags_finder()
+    if flags == None:
+        return
 
-    if flags.test != 0 or flags.test_with_details != 0:
-        test_caller(flags.test, flags.test_with_details)
+    if flags.performance_test != 0 or flags.performance_test_with_details != 0:
+        perfromance_test_caller(flags.performance_test, flags.performance_test_with_details)
+        return
+        
 
     if flags.input == None:
         sample_rate, composite_signal = test_wave_generation()
@@ -106,11 +116,11 @@ def main():
             sample_rate, composite_signal = get_data(flags.input)
         except TypeError:
             print("file not found")
-            exit
+            return
     
     if flags.regular_fourier_transform and flags.fast_fourier_transform:
         print("You may only select one fourier transform")
-        exit
+        return
 
     elif flags.regular_fourier_transform:
         fourier_transform = regular_fourier_transform(composite_signal)
