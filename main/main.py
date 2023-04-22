@@ -39,62 +39,14 @@ def flags_finder(performance_test = 0, ):
 
     return args
 
-def perfromance_test_caller(flags):
-    ''' this function is used to call the appropreate test suite when a test flag is set
-    '''
-
-
-    test = flags.performance_test
-    test_with_details = flags.performance_test_with_details
-    print("Running the test suite")
-
-    if test != 0 & test_with_details != 0:
-        print("You may only run one test suite at a time")
-        exit
-
-
-    if test != 0 :
-        test_suite = performance_test(samples = test)
-
-    elif test_with_details != 0:
-        test_suite = performance_test(samples = test_with_details, details = True)
-
-    # request input for algorithm to test
-    while True:
-        imput = input("Please enter the algorithm you would like to test (options:'rft', 'fft', 'irft', 'ifft', 'all'): ")
-        print()
-        if imput == "rft":
-            test_suite.rft_test()
-            return
-        elif imput == "fft":
-            test_suite.fft_test()
-            return
-        elif imput == "irft":
-            test_suite.irft_test()
-            return
-        elif imput == "ifft":
-            test_suite.ifft_test()
-            return
-        elif imput == "all":
-            
-            test_suite.fft_test()
-            print()
-            test_suite.rft_test()
-            print()
-            test_suite.ifft_test()
-            print()
-            test_suite.irft_test()
-            return
-        else:
-            print("Invalid input")
-
 
 def main():
     # first we look for all the flags that have been set 
     flags = flags_finder()
 
-    if flags.performance_test != 0 or flags.performance_test_with_details != 0:
-        perfromance_test_caller(flags.performance_test, flags.performance_test_with_details, flags.verbose)
+    if flags.performance_test != 0:
+        p_test = performance_test(samples = flags.performance_test, verbose = flags.verbose)
+        p_test.run()
         return
     
     sample_rate, composite_signal = input_checker(flags.input, flags.verbose)
