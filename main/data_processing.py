@@ -11,7 +11,7 @@ def input_checker(file, verbose = False):
         else:
             sample_rate, composite_signal = get_data(file)
     else:
-        sample_rate, composite_signal = test_wave_generation(verbose)
+        sample_rate, composite_signal = test_wave_generation(verbose = verbose)
 
     return sample_rate, composite_signal
 
@@ -21,6 +21,7 @@ def test_wave_generation(duration = 1, sample_rate = 512, verbose = False):
     if verbose:
         print()
         print("no file specified, generating random composite wave of 3 frequencies")
+
     # generate a sine wave with a randome frequency
     frequency_list = [np.random.randint(1, sample_rate), np.random.randint(1, sample_rate), np.random.randint(1, sample_rate)]
     signal_1 = np.sin(2*np.pi*frequency_list[0]*np.arange(sample_rate*duration)/sample_rate)
@@ -36,7 +37,7 @@ def test_wave_generation(duration = 1, sample_rate = 512, verbose = False):
 
         print("    frequencies of composite signal (in hz): " + ", ".join([str(x) + "hz" for x in frequency_list]))
         print()
-
+    
     return (sample_rate, composite_signal)
 
 def get_data(audio_file_path):
