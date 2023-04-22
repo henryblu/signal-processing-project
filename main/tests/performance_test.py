@@ -24,6 +24,39 @@ class performance_test():
             self.fourier_transform_list = [fft(self.signal_list[i]) for i in range(self.samples)]
             self.inverse_transform_list = [ifft(self.fourier_transform_list[i]) for i in range(self.samples)]
 
+    def run(self):
+    
+        print("Running the test suite")
+
+        # request input for algorithm to test
+        while True:
+            imput = input("Please enter the algorithm you would like to test (options:'rft', 'fft', 'irft', 'ifft', 'all'): ")
+            print()
+            if imput == "rft":
+                self.rft_test()
+                return
+            elif imput == "fft":
+                self.fft_test()
+                return
+            elif imput == "irft":
+                self.irft_test()
+                return
+            elif imput == "ifft":
+                self.ifft_test()
+                return
+            elif imput == "all":
+                
+                self.fft_test()
+                print()
+                self.rft_test()
+                print()
+                self.ifft_test()
+                print()
+                self.irft_test()
+                return
+            else:
+                print("Invalid input")
+
     def test_specifications(self, test_num:int = -1):
         ''' this function prints the specifications of the test
         '''
@@ -123,6 +156,7 @@ class performance_test():
                     print('ERROR: memory usage is about 0MB, this is likely due to the fact that the function has already been called once before this test, please fully stop the program and run it again')
                 else:
                     print('Average memory usage over each function call: ' + str(mem_use) + 'MB')
+
     def ifft_test(self):
         ''' this function tests the home made inverse fast fourier transform function using the scipy ifft function if details are true, it will run a time and memory test as well
         '''
@@ -134,10 +168,10 @@ class performance_test():
 
         start_time = time.time()
         if self.samples == 1:
-            inverse_fast_fourier_transform(self.fourier_transform[0])
+            inverse_fast_fourier_transform(self.fourier_transform)
             end_time = time.time()
             time_taken = end_time - start_time
-            memory_use_list_over_function_duration = memory_usage((inverse_fast_fourier_transform, (self.fourier_transform[0],), {}))
+            memory_use_list_over_function_duration = memory_usage((inverse_fast_fourier_transform, (self.fourier_transform,), {}))
             if self.details: 
                 print ('time taken: ' + str(time_taken) + ' seconds')
                 print('memory usage: ' + str(memory_use_list_over_function_duration[-1]-memory_use_list_over_function_duration[0]) + 'MB')
@@ -169,10 +203,10 @@ class performance_test():
 
         start_time = time.time()
         if self.samples == 1:
-            inverse_regular_fourier_transform(self.fourier_transform[0])
+            inverse_regular_fourier_transform(self.fourier_transform)
             end_time = time.time()
             time_taken = end_time - start_time
-            memory_use_list_over_function_duration = memory_usage((inverse_regular_fourier_transform, (self.fourier_transform[0],), {}))
+            memory_use_list_over_function_duration = memory_usage((inverse_regular_fourier_transform, (self.fourier_transform,), {}))
 
             if self.details: 
                 print ('time taken: ' + str(time_taken) + ' seconds')
