@@ -51,10 +51,15 @@ def flags_finder():
 
     return args
 
-def perfromance_test_caller(test = 0, test_with_details = 0):
+def perfromance_test_caller(flags):
     ''' this function is used to call the appropreate test suite when a test flag is set
     '''
-    
+    if flags.performance_test != 0 or flags.performance_test_with_details != 0:
+            perfromance_test_caller(flags.performance_test, flags.performance_test_with_details)
+            return
+
+    test = flags.performance_test
+    test_with_details = flags.performance_test_with_details
     print("Running the test suite")
 
     if test != 0 & test_with_details != 0:
@@ -96,28 +101,10 @@ def perfromance_test_caller(test = 0, test_with_details = 0):
             return
         else:
             print("Invalid input")
-        
 
-def main():
-    # first we look for all the flags that have been set 
-    flags = flags_finder()
-    if flags == None:
-        return
-
-    if flags.performance_test != 0 or flags.performance_test_with_details != 0:
-        perfromance_test_caller(flags.performance_test, flags.performance_test_with_details)
-        return
-        
-
-    if flags.input == None:
-        sample_rate, composite_signal = test_wave_generation()
-    else:
-        try:
-            sample_rate, composite_signal = get_data(flags.input)
-        except TypeError:
-            print("file not found")
-            return
-    
+def transform_caller(flags, sample_rate, composite_signal):
+    '''  this function is used to call the appropreate transform 
+    '''
     if flags.regular_fourier_transform and flags.fast_fourier_transform:
         print("You may only select one fourier transform")
         return
@@ -133,6 +120,31 @@ def main():
         print("defaulting to fast fourier transform")
         fourier_transform = fast_fourier_transform(composite_signal)
         inverse = inverse_fast_fourier_transform(fourier_transform)
+    
+    return fourier_transform, inverse
+
+def input_checker(flags):
+    ''' this function is used to check if the input is valid
+    '''
+    if flags.input != None:
+        if flags.input[-4:] != ".wav":
+            print("Invalid input file type")
+            exit
+        else:
+            sample_rate, composite_signal = get_data(flags.input)
+    else:
+        sample_rate, composite_signal = test_wave_generation()
+
+    return sample_rate, composite_signal
+
+def main():
+    # first we look for all the flags that have been set 
+    flags = flags_finder()
+
+    perfromance_test_caller(flags)        
+
+    sample_rate, composite_signal = input_checker(flags)
+    fourier_transform, inverse = transform_caller(flags, sample_rate, composite_signal)
 
     
     plot_all(sample_rate, composite_signal, inverse, fourier_transform)
@@ -140,8 +152,6 @@ def main():
     if flags.output != None:
         #note that atm this should output the same soundwave as the input
         output(flags.output, inverse)
-
-
 
 
 if __name__ == "__main__":
