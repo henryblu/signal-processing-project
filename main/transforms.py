@@ -2,6 +2,26 @@ import pandas as pd
 import numpy as np
 from scipy import fftpack
 
+def transform_caller(rft, fft, sample_rate, composite_signal):
+    '''  this function is used to call the appropreate transform 
+    '''
+    if rft and fft:
+        print("You may only select one fourier transform")
+        return
+
+    elif rft:
+        fourier_transform = regular_fourier_transform(composite_signal)
+        inverse = inverse_regular_fourier_transform(fourier_transform)
+    elif fft:
+        fourier_transform = fast_fourier_transform(composite_signal)
+        inverse = inverse_fast_fourier_transform(fourier_transform)
+    else:
+        print("no fourier transform selected")
+        print("defaulting to fast fourier transform")
+        fourier_transform = fast_fourier_transform(composite_signal)
+        inverse = inverse_fast_fourier_transform(fourier_transform)
+    
+    return fourier_transform, inverse
 
 def regular_fourier_transform(audio_data):
     ''' this function performs a regualr fourier transform on a given audio data
@@ -12,7 +32,6 @@ def regular_fourier_transform(audio_data):
         for n in range(N):
             fourier_transform[k] += audio_data[n]*np.exp(-2j*np.pi*k*n/N)
     return fourier_transform
-
 
 def fast_fourier_transform(audio_data):
     ''' This function performs a fast fourier transform on a given audio data it only workd for audio data with a length that is a power of 2
@@ -42,7 +61,6 @@ def inverse_regular_fourier_transform(fourier_transform):
             inverse_fourier_transform[k] += fourier_transform[n]*np.exp(2j*np.pi*k*n/N)
 
     return inverse_fourier_transform/N
-
 
 def inverse_fast_fourier_transform(fourier_transform):
     ''' this function performs an inverse fast fourier transform on a given fourier transform
