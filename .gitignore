@@ -1,2 +1,4 @@
 # ignoring all instances of pycache and __pycache__ directories
-__pycache__/
+__pycache__
+./main/tests/__pycache__
+./main/__pycache__
