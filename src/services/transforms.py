@@ -1,6 +1,4 @@
-import pandas as pd
 import numpy as np
-from scipy import fftpack
 
 def transform_caller(rft, fft, sample_rate, composite_signal):
     '''  this function is used to call the appropreate transform 
@@ -29,15 +27,14 @@ def regular_fourier_transform(audio_data):
     N = len(audio_data)
     fourier_transform = np.zeros(N, dtype=complex)
     for k in range(N):
-        for n in range(N):
-            fourier_transform[k] += audio_data[n]*np.exp(-2j*np.pi*k*n/N)
+        for q in range(N):
+            fourier_transform[k] += audio_data[q]*np.exp(-2j*np.pi*k*q/N)
     return fourier_transform
 
 def fast_fourier_transform(audio_data):
     ''' This function performs a fast fourier transform on a given audio data it only workd for audio data with a length that is a power of 2
     '''
     N = int(len(audio_data))
-
     if N <= 1:
         return audio_data
     elif N % 2 != 0: 
@@ -47,7 +44,6 @@ def fast_fourier_transform(audio_data):
     odd = fast_fourier_transform(audio_data[1:N:2])
 
     factor = np.exp(-2j*np.pi*np.arange(N)/N)
-    
     return np.concatenate([even + factor[:N//2]*odd, even + factor[N//2:]*odd])
 
 def inverse_regular_fourier_transform(fourier_transform):
@@ -57,8 +53,8 @@ def inverse_regular_fourier_transform(fourier_transform):
     N = len(fourier_transform)
     inverse_fourier_transform = np.zeros(N, dtype=complex)
     for k in range(N):
-        for n in range(N):
-            inverse_fourier_transform[k] += fourier_transform[n]*np.exp(2j*np.pi*k*n/N)
+        for q in range(N):
+            inverse_fourier_transform[k] += fourier_transform[q]*np.exp(2j*np.pi*k*q/N)
 
     return inverse_fourier_transform/N
 
