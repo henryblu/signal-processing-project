@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 sys.path.append(os.path.abspath('..'))
-from ui.main import *
+from main import *
 
 class test_main(unittest.TestCase):
     def test_flags_finder(self):
@@ -15,6 +15,7 @@ class test_main(unittest.TestCase):
         self.assertEqual(flags.performance_test, 0)
         self.assertEqual(flags.fast_fourier_transform, False)
         self.assertEqual(flags.regular_fourier_transform, False)
+
 
 
 
