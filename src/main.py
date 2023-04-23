@@ -51,8 +51,6 @@ def main():
     
     sample_rate, composite_signal = input_checker(flags.input, flags.verbose)
     fourier_transform, inverse = transform_caller(flags.regular_fourier_transform, flags.fast_fourier_transform, sample_rate, composite_signal)
-
-    
     plot_all(sample_rate, composite_signal, inverse, fourier_transform)
 
     if flags.output != None:

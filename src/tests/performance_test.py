@@ -47,15 +47,14 @@ class performance_test():
             elif imput == "all":
                 
                 self.fft_test()
-                print()
                 self.rft_test()
-                print()
                 self.ifft_test()
-                print()
                 self.irft_test()
+                print("All tests complete")
                 return
             else:
                 print("Invalid input")
+            
 
     def test_specifications(self, test_num:int = -1):
         ''' this function prints the specifications of the test
