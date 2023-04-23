@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "signal-processing-project"
+version = "0.1.0"
+description = ""
+authors = ["henry <henry.s.blue@gmail.com>"]
+readme = "README.md"
+packages = [{include = "signal_processing_project"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<=3.11"
+pandas = "^2.0.0"
+scipy = "^1.10.1"
+matplotlib = "^3.7.1"
+memory-profiler = "^0.61.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
