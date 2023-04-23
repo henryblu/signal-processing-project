@@ -2,13 +2,13 @@ import unittest
 import sys
 import os
 sys.path.append(os.path.abspath('..'))
-from main import *
+from main import flags_finder
 
 class test_main(unittest.TestCase):
     def test_flags_finder(self):
         ''' test that the flags_finder function returns the correct flags
         '''
-        flags = main.flags_finder()
+        flags = flags_finder()
         self.assertEqual(flags.helper, False)
         self.assertEqual(flags.input, None)
         self.assertEqual(flags.output, None)

@@ -1,7 +1,7 @@
 import unittest
 import sys
 import os
-sys.path.append(os.path.abspath('..'))
+sys.path.append(os.path.abspath('../..'))
 from services.transforms import *
 from services.data_processing import test_wave_generation
 from scipy.fft import fft, ifft

@@ -52,16 +52,16 @@ def get_data(audio_file_path):
     return (sample_rate, np.array(audio_data))
 
 def output(sample_rate, new_sound_wave, output_file_path):
-    ''' this function is used to output the new sound wave to a file with default path: main\Data\output.wav
+    ''' this function is used to output the new sound wave to a file with default path: main\data\output.wav
     '''
     # not working right now 
     
     if(output_file_path == None):
         # if no file is specified then we use the default file this try exept is a workaround for the fact that the file is in a different location when running the tests and debugging
         try:
-            wav.write("main\Data\output.wav", sample_rate, new_sound_wave)
+            wav.write("src\data\output.wav", sample_rate, new_sound_wave)
         except FileNotFoundError: 
-            wav.write("Data\output.wav", sample_rate, new_sound_wave)
+            wav.write("..\data\output.wav", sample_rate, new_sound_wave)
 
     else:
         try:
