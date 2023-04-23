@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 plt.style.use('seaborn')
 
 def plot_sound_wave(sample_rate, audio_data):

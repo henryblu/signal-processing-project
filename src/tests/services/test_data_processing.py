@@ -3,7 +3,7 @@ import unittest
 import sys
 import os
 sys.path.append(os.path.abspath('..'))
-import data_processing as DataProcessing
+import services.data_processing as DataProcessing
 
 class test_data_processing(unittest.TestCase):
     def test_input_checker(self):

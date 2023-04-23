@@ -1,5 +1,5 @@
-from transforms import *
-from visualisations import *
+from services.transforms import *
+from ui.visualisations import *
 from scipy.fft import fft, ifft
 from memory_profiler import memory_usage
 import time

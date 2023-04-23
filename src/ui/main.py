@@ -1,8 +1,8 @@
 import argparse
-from data_processing import *
+from services.data_processing import *
 from visualisations import *
-from transforms import *
-from noise_reduction import *
+from services.transforms import *
+from services.noise_reduction import *
 from tests.performance_test import *
 
 def print_help():

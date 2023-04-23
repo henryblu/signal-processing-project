@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 sys.path.append(os.path.abspath('..'))
-import main
+from ui.main import *
 
 class test_main(unittest.TestCase):
     def test_flags_finder(self):
