@@ -1,6 +1,6 @@
 import argparse
 from services.data_processing import *
-from ui.visualisations import *
+from visualisations import *
 from services.transforms import *
 from services.noise_reduction import *
 from tests.performance_test import *
