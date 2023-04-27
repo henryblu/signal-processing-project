@@ -1,19 +1,21 @@
 import unittest
-import sys
-import os
-sys.path.append(os.path.abspath('../..'))
 from services.transforms import *
-from services.data_processing import test_wave_generation
 from scipy.fft import fft, ifft
 import numpy as np
-
 
 class test_transforms(unittest.TestCase):
 
     def setUp(self):
         ''' this function is used to set up the test environment
         '''
-        self.test_wave = test_wave_generation()[1]
+        duration = 1
+        sample_rate = 512
+        frequency_list = [np.random.randint(1, sample_rate), np.random.randint(1, sample_rate), np.random.randint(1, sample_rate)]
+        signal_1 = np.sin(2*np.pi*frequency_list[0]*np.arange(sample_rate*duration)/sample_rate)
+        signal_2 = np.sin(2*np.pi*frequency_list[1]*np.arange(sample_rate*duration)/sample_rate)
+        signal_3 = np.sin(2*np.pi*frequency_list[2]*np.arange(sample_rate*duration)/sample_rate)
+        composite_signal = signal_1 + signal_2 + signal_3
+        self.test_wave = composite_signal
         self.fourier_transform = fft(self.test_wave)
         self.inverse = ifft(self.fourier_transform)
 

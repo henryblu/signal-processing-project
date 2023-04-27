@@ -1,6 +1,4 @@
-import pandas as pd
 import numpy as np
-from scipy import fftpack
 
 def noise_reduction(fourier_transform, threadshold_level):
     '''this function performs a noise reduction on a given fourier transform depended on the given threashold. It dosnt work yet

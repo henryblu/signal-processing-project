@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('seaborn')
 
 def plot_sound_wave(sample_rate, audio_data):
     ''' this function plots a given sound wave using its sample rate and the audio data. 
     '''
 
     time = np.linspace(0, len(audio_data)/sample_rate, num=len(audio_data))
+    plt.style.use('seaborn')
     plt.plot(time, audio_data)
     plt.xlabel("Time (s)")
     plt.ylabel("Amplitude")
@@ -23,6 +23,7 @@ def plot_fourier_transform(fourier_transform):
     except IndexError:
         fourier_transform = fourier_transform[:len(fourier_transform)//2]
     ''' 
+    plt.style.use('seaborn')
     plt.plot(fourier_transform)
     plt.xlabel("Frequency (hz)")
     plt.ylabel("Amplitude")
@@ -74,4 +75,5 @@ def plot_all(sample_rate, og_audio_data, transformed_audio_data, fourier_transfo
     except ValueError:
         pass 
 
+    plt.style.use('seaborn')
     plt.show()
