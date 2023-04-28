@@ -21,11 +21,11 @@
 
 - To execute this program please run: 
 
-        poetry run python src/main.py
+        poetry run python main.py
 
 - there are a number of flags that can be set, to discover them use:
 
-        poetry run python src/main.py -h
+        poetry run python src/ui/main.py -h
 
 
 
