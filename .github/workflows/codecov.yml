@@ -1,2 +1,6 @@
-- name: Upload coverage reports to Codecov
-  uses: codecov/codecov-action@v3
+name: Coverage report
+on: [push, workflow_dispatch]
+jobs:
+    run:
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
