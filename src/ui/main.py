@@ -5,25 +5,13 @@ from services.transforms import *
 from services.noise_reduction import *
 from tests.performance_test import *
 
-def print_help():
-    # prints the help message
-    print(
-        """
-        Currently, this program can be used to test the functionality of two types of fourier and inverse fourier transforms.
-
-        current limitations:
-        - the program can only read and write to .wav files
-        - the program can only write to .csv files
-        - unit tests must be run one by one
-
-        """
-    ) 
-
-def flags_finder(performance_test = 0, ):
+def flags_finder():
     ''' this function is used to find all the flags that have been set.
+
+    Returns:
+        list[int]: a list of all the flags that have been set
     '''
     parser = argparse.ArgumentParser()
-    parser.add_argument("-H", "--helper", help="prints a help message on the current state of the project", action="store_true")
     parser.add_argument("-i", "--input", help="specifies the .wav sound wave file to be read. Default is randomly generated sound wave")
     parser.add_argument("-o", "--output", help="specifies the file to be written to default is ./data/output.csv")
     parser.add_argument("-v", "--verbose", help="prints the details of the algrithm including time taken and memory taken", action="store_true")
@@ -32,10 +20,6 @@ def flags_finder(performance_test = 0, ):
     parser.add_argument("-t", "--performance_test", help="specifies the number of samples to be used in the performance test. Default is 0", type=int, default=0)
     args = parser.parse_args()
 
-    if args.helper:
-        print_help()
-        return
-
     return args
 
 
@@ -43,6 +27,7 @@ def main():
     ''' This function is the main function of the program it is used to call all the other functions
     '''
     flags = flags_finder()
+    print(flags)
 
     if flags.performance_test != 0:
         p_test = performance_test(samples = flags.performance_test, verbose = flags.verbose)
