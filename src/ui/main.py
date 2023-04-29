@@ -1,4 +1,9 @@
 import argparse
+import os
+import sys
+
+# this is used to import the modules from the parent directory
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from services.data_processing import input_checker, output
 from services.transforms import transform_caller
 from ui.visualisations import plot_all
@@ -49,7 +54,6 @@ def flags_finder():
         default=0,
     )
     args = parser.parse_args()
-
     return args
 
 
