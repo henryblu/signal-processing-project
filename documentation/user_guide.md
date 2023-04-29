@@ -19,13 +19,19 @@
 
 ## Executalbes
 
+starting from path/to/repository/signal-processing-project/
+
 - To execute this program please run: 
 
-        poetry run python main.py
+        poetry run python src/ui/main.py 
 
 - there are a number of flags that can be set, to discover them use:
 
         poetry run python src/ui/main.py -h
+
+- if you want to run the test suite, please run: 
+
+        pytest src
 
 
 
