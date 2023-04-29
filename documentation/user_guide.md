@@ -31,7 +31,7 @@
 
 ## Program inputs
 
-- usingt the --input flag, you can specify the input file you want to decompose
+- using the --input flag, you can specify the input .wav file you want to decompose
         
         *#1 at the moment, the fast fourier transform only works with files which have a length which is power of two
         *#2 regular fourier transforms are really, really slow for imputs, so watch out. 
