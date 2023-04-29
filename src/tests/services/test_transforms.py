@@ -1,5 +1,13 @@
 import unittest
 import numpy as np
+import os
+import sys
+
+sys.path.append(
+    os.path.abspath(
+        os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir)
+    )
+)
 from scipy.fft import fft, ifft
 from services.transforms import (
     regular_fourier_transform,
@@ -8,43 +16,66 @@ from services.transforms import (
     inverse_fast_fourier_transform,
     transform_caller,
 )
-from services.data_processing import test_wave_generation
 
 
 class test_transforms(unittest.TestCase):
-    def setUp(self):
-        """this function is used to set up the test environment"""
-        composite_signal = test_wave_generation()[1]
-        self.test_wave = composite_signal
-        self.fourier_transform = fft(self.test_wave)
-        self.inverse = ifft(self.fourier_transform)
+    @classmethod
+    def setUpClass(cls):
+        """this function is used to setup the test class the composite wave tests the upper and lower bowndaries of a possible wave"""
+        super(test_transforms, cls).setUpClass()
+        signal_1 = np.sin(2 * np.pi * 1 * np.arange(1024) / 1024)
+        signal_2 = np.sin(
+            2 * np.pi * np.random.randint(1, 1024) * np.arange(1024) / 1024
+        )
+        signal_3 = np.sin(2 * np.pi * 1024 * np.arange(1024) / 1024)
+        cls.test_waves = signal_1 + signal_2 + signal_3
+        
 
     def test_regular_fourier_transform(self):
         """this function tests the regular fourier transform function and make sure that all values
         of the wave match the values in a known fourier transform
         """
-        np.allclose(self.fourier_transform, regular_fourier_transform(self.test_wave))
+        assert (
+            np.allclose(
+                fft(self.test_waves), regular_fourier_transform(self.test_waves)
+            )
+            is True
+        )
 
     def test_fast_fourier_transform(self):
         """this function test the fast fourier transform function"""
-        np.allclose(self.fourier_transform, fast_fourier_transform(self.test_wave))
+        assert (
+            np.allclose(fft(self.test_waves), fast_fourier_transform(self.test_waves))
+            is True
+        )
 
     def test_inverse_regular_fourier_transform(self):
         """this function test the inverse regular fourier transform function"""
-        np.allclose(
-            self.inverse, inverse_regular_fourier_transform(self.fourier_transform)
+
+        assert (
+            np.allclose(
+                self.test_waves, inverse_regular_fourier_transform(fft(self.test_waves))
+            )
+            is True
         )
 
     def test_inverse_fast_fourier_transform(self):
         """this function test the inverse fast fourier transform function"""
-        np.allclose(
-            self.inverse, inverse_fast_fourier_transform(self.fourier_transform)
+        assert (
+            np.allclose(
+                self.test_waves, inverse_fast_fourier_transform(fft(self.test_waves))
+            )
+            is True
         )
 
     def test_transform_caller(self):
         """this function tests the transform caller function"""
-        fourier_transform = transform_caller(True, False, self.test_wave)[0]
-        np.allclose(self.fourier_transform, fourier_transform)
+        assert (
+            np.allclose(
+                fft(self.test_waves), transform_caller(True, False, self.test_waves)[0]
+            )
+            is True
+        )
 
 
 if __name__ == "__main__":

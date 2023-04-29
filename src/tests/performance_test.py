@@ -7,7 +7,7 @@ from services.transforms import (
     regular_fourier_transform,
     inverse_regular_fourier_transform,
 )
-from services.data_processing import test_wave_generation
+from services.data_processing import sample_wave_generation
 
 
 class performance_test:
@@ -18,12 +18,12 @@ class performance_test:
         self.samples = samples
 
         if self.samples == 1:
-            self.signal = test_wave_generation()
+            self.signal = sample_wave_generation()
             self.fourier_transform = fft(self.signal[0])
             self.inverse_transform = ifft(self.fourier_transform)
         else:
             self.signals_and_frequencies = [
-                test_wave_generation() for i in range(self.samples)
+                sample_wave_generation() for i in range(self.samples)
             ]
             self.signal_list = [
                 self.signals_and_frequencies[i][0] for i in range(self.samples)
@@ -69,7 +69,7 @@ class performance_test:
             else:
                 print("Invalid input")
 
-    def test_specifications(self, test_num: int = -1):
+    def specifications(self, test_num: int = -1):
         """this function prints the specifications of the test"""
 
         if test_num == -1:
@@ -101,7 +101,7 @@ class performance_test:
             print()
             print("unit test starting for algorithm:  fast fourier transform")
             print()
-            self.test_specifications()
+            self.specifications()
 
         start_time = time.time()
         if self.samples == 1:
@@ -154,7 +154,7 @@ class performance_test:
             print()
             print("unit test starting for algorithm:  regular fourier transform")
             print()
-            self.test_specifications()
+            self.specifications()
 
         start_time = time.time()
         if self.samples == 1:
@@ -210,7 +210,7 @@ class performance_test:
             print()
             print("unit test starting for algorithm:  inverse fast fourier transform")
             print()
-            self.test_specifications()
+            self.specifications()
 
         start_time = time.time()
         if self.samples == 1:
@@ -265,7 +265,7 @@ class performance_test:
                 "unit test starting for algorithm:  inverse regular fourier transform"
             )
             print()
-            self.test_specifications()
+            self.specifications()
 
         start_time = time.time()
         if self.samples == 1:

@@ -31,7 +31,7 @@ class test_data_processing(unittest.TestCase):
 
     def test_test_wave_generation(self):
         """test that the test_wave_generation function returns the correct sample rate and data"""
-        sample_rate, data = DataProcessing.test_wave_generation()
+        sample_rate, data = DataProcessing.sample_wave_generation()
         self.assertEqual(sample_rate, 512)
         self.assertEqual(len(data), 512)
 
