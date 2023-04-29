@@ -19,12 +19,12 @@ def input_checker(file, verbose=False):
             return None, None
         sample_rate, composite_signal = get_data(file)
     else:
-        sample_rate, composite_signal = test_wave_generation(verbose=verbose)
+        sample_rate, composite_signal = sample_wave_generation(verbose=verbose)
 
     return sample_rate, composite_signal
 
 
-def test_wave_generation(duration=1, sample_rate=512, verbose=False):
+def sample_wave_generation(duration=1, sample_rate=512, verbose=False):
     """
     this function generates a composite wavfe of three random waves of a given
     sample rate and duration
