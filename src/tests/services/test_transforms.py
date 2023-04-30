@@ -1,8 +1,8 @@
 import unittest
-import os
-import sys
 import numpy as np
+import pytest
 from scipy.fft import fft
+from services.data_processing import input_checker
 from services.transforms import (
     regular_fourier_transform,
     fast_fourier_transform,
@@ -10,14 +10,6 @@ from services.transforms import (
     inverse_fast_fourier_transform,
     transform_caller,
 )
-
-sys.path.append(
-    os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir)
-    )
-)
-
-
 class test_transforms(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -30,6 +22,8 @@ class test_transforms(unittest.TestCase):
         )
         signal_3 = np.sin(2 * np.pi * 1024 * np.arange(1024) / 1024)
         cls.test_waves = signal_1 + signal_2 + signal_3
+
+        cls.test_file = input_checker(r'src/Data/StarWars3.wav', False)[1]
 
     def test_regular_fourier_transform(self):
         """this function tests the regular fourier transform function and make sure that all values
@@ -48,6 +42,9 @@ class test_transforms(unittest.TestCase):
             np.allclose(fft(self.test_waves), fast_fourier_transform(self.test_waves))
             is True
         )
+        with pytest.raises(ValueError, match="size of audio_data must be a power of 2"):
+            fast_fourier_transform(self.test_file)
+
 
     def test_inverse_regular_fourier_transform(self):
         """this function test the inverse regular fourier transform function"""
@@ -76,6 +73,23 @@ class test_transforms(unittest.TestCase):
             )
             is True
         )
+        assert (
+            np.allclose(
+                fft(self.test_waves), transform_caller(False, False, self.test_waves)[0]
+            )
+            is True
+        )
+        assert (
+            np.allclose(
+                fft(self.test_waves), transform_caller(False, True, self.test_waves)[0]
+            )
+            is True
+        )
+        with pytest.raises(ValueError, match="both rft and fft cannot be true"):
+            transform_caller(True, True, self.test_waves)
+        
+
+                
 
 
 if __name__ == "__main__":

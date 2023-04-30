@@ -15,8 +15,7 @@ def transform_caller(rft, fft, composite_signal):
         np.array: the inverse fourier transform of the fourier transform
     """
     if rft and fft:
-        print("You may only select one fourier transform")
-        return None, None
+        raise ValueError("both rft and fft cannot be true")
 
     if rft:
         fourier_transform = regular_fourier_transform(composite_signal)
