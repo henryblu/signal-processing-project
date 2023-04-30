@@ -1,14 +1,8 @@
 import unittest
-import numpy as np
 import os
 import sys
-
-sys.path.append(
-    os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir)
-    )
-)
-from scipy.fft import fft, ifft
+import numpy as np
+from scipy.fft import fft
 from services.transforms import (
     regular_fourier_transform,
     fast_fourier_transform,
@@ -17,11 +11,18 @@ from services.transforms import (
     transform_caller,
 )
 
+sys.path.append(
+    os.path.abspath(
+        os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir)
+    )
+)
+
 
 class test_transforms(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        """this function is used to setup the test class the composite wave tests the upper and lower bowndaries of a possible wave"""
+        """this function is used to setup the test class the composite wave tests the upper and
+        lower bowndaries of a possible wave"""
         super(test_transforms, cls).setUpClass()
         signal_1 = np.sin(2 * np.pi * 1 * np.arange(1024) / 1024)
         signal_2 = np.sin(
@@ -29,7 +30,6 @@ class test_transforms(unittest.TestCase):
         )
         signal_3 = np.sin(2 * np.pi * 1024 * np.arange(1024) / 1024)
         cls.test_waves = signal_1 + signal_2 + signal_3
-        
 
     def test_regular_fourier_transform(self):
         """this function tests the regular fourier transform function and make sure that all values

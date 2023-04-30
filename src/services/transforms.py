@@ -40,7 +40,6 @@ def regular_fourier_transform(audio_data):
 
     Returns:
         np.array: the fourier transform of the audio data
-
     """
     N = len(audio_data)
     fourier_transform = np.zeros(N, dtype=complex)
@@ -59,7 +58,6 @@ def fast_fourier_transform(audio_data):
 
     Returns:
         np.array: the fourier transform of the audio data
-
     """
     N = int(len(audio_data))
     if N <= 1:
