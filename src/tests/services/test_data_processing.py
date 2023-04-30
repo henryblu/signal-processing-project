@@ -10,7 +10,7 @@ from services.data_processing import (
 class test_data_processing(unittest.TestCase):
     def test_input_checker(self):
         """test that the input_checker function returns the correct sample rate and data"""
-        sample_rate, data = input_checker(r"src\data\StarWars3.wav")
+        sample_rate, data = input_checker(r"data\StarWars3.wav")
         self.assertEqual(sample_rate, 22050)
         self.assertEqual(len(data), 66150)
 
