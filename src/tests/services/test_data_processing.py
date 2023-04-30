@@ -20,7 +20,7 @@ class test_data_processing(unittest.TestCase):
 
     def test_get_data(self):
         """test that the get_data function returns the correct sample rate and data"""
-        sample_rate, data = get_data((r"src\data\StarWars3.wav"))
+        sample_rate, data = get_data((r"data\StarWars3.wav"))
         self.assertEqual(sample_rate, 22050)
         self.assertEqual(len(data), 66150)
 
@@ -32,14 +32,14 @@ class test_data_processing(unittest.TestCase):
 
     def test_output(self):
         """test that the output function returns the correct sample rate and data"""
-        sample_rate, data = input_checker(r"src\data\StarWars3.wav")
+        sample_rate, data = input_checker(r"data\StarWars3.wav")
         output(
             sample_rate,
             data,
-            r"src\data\StarWars3.wav",
+            r"data\StarWars3.wav",
         )
 
-        sample_rate, data = get_data(r"src\data\StarWars3.wav")
+        sample_rate, data = get_data(r"data\StarWars3.wav")
         self.assertEqual(sample_rate, 22050)
         self.assertEqual(len(data), 66150)
 
