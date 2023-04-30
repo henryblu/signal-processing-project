@@ -5,11 +5,7 @@ import services.data_processing as DataProcessing
 class test_data_processing(unittest.TestCase):
     def test_input_checker(self):
         """test that the input_checker function returns the correct sample rate and data"""
-        sample_rate, data = DataProcessing.input_checker(
-            r"C:\Users\henry\OneDrive - University of Helsinki\Documents\University files\Comp"
-            + r" sci\year 2\data structures and algoithms project course\signal-processing-pro"
-            + r"ject\src\data\StarWars3.wav"
-        )
+        sample_rate, data = DataProcessing.input_checker(r"src\data\StarWars3.wav")
         self.assertEqual(sample_rate, 22050)
         self.assertEqual(len(data), 66150)
 
@@ -19,13 +15,7 @@ class test_data_processing(unittest.TestCase):
 
     def test_get_data(self):
         """test that the get_data function returns the correct sample rate and data"""
-        sample_rate, data = DataProcessing.get_data(
-            (
-                r"C:\Users\henry\OneDrive - University of Helsinki\Documents\University files\Comp"
-                + r" sci\year 2\data structures and algoithms project course\signal-processing-pro"
-                + r"ject\src\data\StarWars3.wav"
-            )
-        )
+        sample_rate, data = DataProcessing.get_data((r"src\data\StarWars3.wav"))
         self.assertEqual(sample_rate, 22050)
         self.assertEqual(len(data), 66150)
 
@@ -37,24 +27,14 @@ class test_data_processing(unittest.TestCase):
 
     def test_output(self):
         """test that the output function returns the correct sample rate and data"""
-        sample_rate, data = DataProcessing.input_checker(
-            r"C:\Users\henry\OneDrive - University of Helsinki\Documents\University files\Comp"
-            + r" sci\year 2\data structures and algoithms project course\signal-processing-pro"
-            + r"ject\src\data\StarWars3.wav"
-        )
+        sample_rate, data = DataProcessing.input_checker(r"src\data\StarWars3.wav")
         DataProcessing.output(
             sample_rate,
             data,
-            r"C:\Users\henry\OneDrive - University of Helsinki\Documents\University files\Comp"
-            + r" sci\year 2\data structures and algoithms project course\signal-processing-pro"
-            + r"ject\src\data\StarWars3.wav",
+            r"src\data\StarWars3.wav",
         )
 
-        sample_rate, data = DataProcessing.get_data(
-            r"C:\Users\henry\OneDrive - University of Helsinki\Documents\University files\Comp"
-            + r" sci\year 2\data structures and algoithms project course\signal-processing-pro"
-            + r"ject\src\data\StarWars3.wav"
-        )
+        sample_rate, data = DataProcessing.get_data(r"src\data\StarWars3.wav")
         self.assertEqual(sample_rate, 22050)
         self.assertEqual(len(data), 66150)
 
