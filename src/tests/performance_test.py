@@ -9,6 +9,7 @@ from services.transforms import (
 )
 from services.data_processing import sample_wave_generation
 
+
 class performance_test:
     def __init__(self, duration=1, sample_rate=256, samples=1, verbose=False):
         self.duration = duration
