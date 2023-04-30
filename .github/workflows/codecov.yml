@@ -2,6 +2,7 @@ name: Coverage report
 on: [push, workflow_dispatch]
 jobs:
     run:
+      runs-on: ubuntu-latest
       steps:
         - name: Checkout
           uses: actions/checkout@v3
