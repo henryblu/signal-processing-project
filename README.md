@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/henryblu/signal-processing-project/branch/main/graph/badge.svg?token=05TLDCQDNI)](https://codecov.io/gh/henryblu/signal-processing-project)
 # Project Specification Document
 ### Degree Programme: **Bachelor in Science**
 ### Documentation Language: **English** 
