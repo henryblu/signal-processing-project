@@ -1,4 +1,7 @@
 import unittest
+import pytest
+import io
+from contextlib import redirect_stdout
 from services.data_processing import (
     input_checker,
     sample_wave_generation,
@@ -17,6 +20,9 @@ class test_data_processing(unittest.TestCase):
         sample_rate, data = input_checker(None)
         self.assertEqual(sample_rate, 512)
         self.assertEqual(len(data), 512)
+
+        with pytest.raises(ValueError, match="input file must be a .wav file"):
+            sample_rate, data = input_checker("test")
 
     def test_get_data(self):
         """test that the get_data function returns the correct sample rate and data"""

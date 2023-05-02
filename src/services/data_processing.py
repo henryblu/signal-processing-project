@@ -15,8 +15,7 @@ def input_checker(file, verbose=False):
     """
     if file is not None:
         if file[-4:] != ".wav":
-            print("Invalid input file type")
-            return None, None
+            raise ValueError("input file must be a .wav file")
         sample_rate, composite_signal = get_data(file)
     else:
         sample_rate, composite_signal = sample_wave_generation(verbose=verbose)
@@ -84,11 +83,10 @@ def get_data(audio_file_path):
     """
     try:
         sample_rate, audio_data = wav.read(audio_file_path)
-    except FileNotFoundError:
-        print("input path not found")
-        return None, None
+    except FileNotFoundError as exc:
+        raise FileNotFoundError("input file not found") from exc
+    
     return (sample_rate, np.array(audio_data))
-
 
 def output(sample_rate, new_sound_wave, output_file_path=None):
     """this function is used to output the new sound wave to a file.
