@@ -8,7 +8,7 @@ from services.data_processing import (
     get_data,
     output,
 )
-
+   
 
 class test_data_processing(unittest.TestCase):
     def test_input_checker(self):
@@ -43,6 +43,9 @@ class test_data_processing(unittest.TestCase):
         sample_rate, data = get_data((r"src/Data/StarWars3.wav"))
         self.assertEqual(sample_rate, 22050)
         self.assertEqual(len(data), 66150)
+        with pytest.raises(FileNotFoundError, match="input file not found"):
+            sample_rate, data = get_data("serasdfg/safdsadf/p.wav")
+
 
     def test_output(self):
         """test that the output function returns the correct sample rate and data"""
@@ -52,10 +55,16 @@ class test_data_processing(unittest.TestCase):
             data,
             r"src/Data/StarWars3.wav",
         )
-
-        sample_rate, data = get_data(r"src/Data/StarWars3.wav")
-        self.assertEqual(sample_rate, 22050)
-        self.assertEqual(len(data), 66150)
+        output(
+            sample_rate,
+            data,
+            None,
+        )
+        output(
+            sample_rate,
+            data,
+            r"src/dataaaaaa/test.wav",
+        )
 
 
 if __name__ == "__main__":

@@ -98,13 +98,7 @@ def output(sample_rate, new_sound_wave, output_file_path=None):
     """
     # not working right now
     if not output_file_path:
-        # if no file is specified then we use the default file this try exept is
-        # a workaround for the fact that the file is in a different location when
-        # running the tests and debugging
-        try:
-            wav.write(r"src\data\output.wav", sample_rate, new_sound_wave)
-        except FileNotFoundError:
-            wav.write(r"..\data\output.wav", sample_rate, new_sound_wave)
+        wav.write(r"src\data\output.wav", sample_rate, new_sound_wave)
 
     else:
         try:
