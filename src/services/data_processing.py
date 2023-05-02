@@ -85,8 +85,9 @@ def get_data(audio_file_path):
         sample_rate, audio_data = wav.read(audio_file_path)
     except FileNotFoundError as exc:
         raise FileNotFoundError("input file not found") from exc
-    
+
     return (sample_rate, np.array(audio_data))
+
 
 def output(sample_rate, new_sound_wave, output_file_path=None):
     """this function is used to output the new sound wave to a file.

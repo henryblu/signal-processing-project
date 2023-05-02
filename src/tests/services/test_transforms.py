@@ -10,6 +10,8 @@ from services.transforms import (
     inverse_fast_fourier_transform,
     transform_caller,
 )
+
+
 class test_transforms(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -23,7 +25,7 @@ class test_transforms(unittest.TestCase):
         signal_3 = np.sin(2 * np.pi * 1024 * np.arange(1024) / 1024)
         cls.test_waves = signal_1 + signal_2 + signal_3
 
-        cls.test_file = input_checker(r'src/Data/StarWars3.wav', False)[1]
+        cls.test_file = input_checker(r"src/Data/StarWars3.wav", False)[1]
 
     def test_regular_fourier_transform(self):
         """this function tests the regular fourier transform function and make sure that all values
@@ -44,7 +46,6 @@ class test_transforms(unittest.TestCase):
         )
         with pytest.raises(ValueError, match="size of audio_data must be a power of 2"):
             fast_fourier_transform(self.test_file)
-
 
     def test_inverse_regular_fourier_transform(self):
         """this function test the inverse regular fourier transform function"""
@@ -87,9 +88,6 @@ class test_transforms(unittest.TestCase):
         )
         with pytest.raises(ValueError, match="both rft and fft cannot be true"):
             transform_caller(True, True, self.test_waves)
-        
-
-                
 
 
 if __name__ == "__main__":

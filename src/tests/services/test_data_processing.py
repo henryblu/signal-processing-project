@@ -8,7 +8,7 @@ from services.data_processing import (
     get_data,
     output,
 )
-   
+
 
 class test_data_processing(unittest.TestCase):
     def test_input_checker(self):
@@ -30,7 +30,10 @@ class test_data_processing(unittest.TestCase):
             sample_rate, data = sample_wave_generation(verbose=True)
             print_output = buf.getvalue()
             print(print_output)
-            self.assertIn("no file specified, generating random composite wave of 3 frequencies", print_output)
+            self.assertIn(
+                "no file specified, generating random composite wave of 3 frequencies",
+                print_output,
+            )
             self.assertIn("wave specification", print_output)
             self.assertIn("duration of wave: 1 seconds", print_output)
             self.assertIn("sample rate: 512 samples per second", print_output)
@@ -45,7 +48,6 @@ class test_data_processing(unittest.TestCase):
         self.assertEqual(len(data), 66150)
         with pytest.raises(FileNotFoundError, match="input file not found"):
             sample_rate, data = get_data("serasdfg/safdsadf/p.wav")
-
 
     def test_output(self):
         """test that the output function returns the correct sample rate and data"""
