@@ -1,6 +1,6 @@
 # ignoring all instances of pycache and __pycache__ directories
 __pycache__
-./main/tests/__pycache__
-./main/__pycache__
 ./main/Data/output.wav
 .pytest_cache
+.coverage
+.coverage.xml
