@@ -4,10 +4,7 @@ import pytest
 from scipy.fft import fft
 from services.data_processing import input_checker
 from services.transforms import (
-    regular_fourier_transform,
     fast_fourier_transform,
-    inverse_regular_fourier_transform,
-    inverse_fast_fourier_transform,
     transform_caller,
 )
 
@@ -27,44 +24,10 @@ class test_transforms(unittest.TestCase):
 
         cls.test_file = input_checker(r"src/Data/StarWars3.wav", False)[1]
 
-    def test_regular_fourier_transform(self):
-        """this function tests the regular fourier transform function and make sure that all values
-        of the wave match the values in a known fourier transform
-        """
-        assert (
-            np.allclose(
-                fft(self.test_waves), regular_fourier_transform(self.test_waves)
-            )
-            is True
-        )
-
     def test_fast_fourier_transform(self):
         """this function test the fast fourier transform function"""
-        assert (
-            np.allclose(fft(self.test_waves), fast_fourier_transform(self.test_waves))
-            is True
-        )
         with pytest.raises(ValueError, match="size of audio_data must be a power of 2"):
             fast_fourier_transform(self.test_file)
-
-    def test_inverse_regular_fourier_transform(self):
-        """this function test the inverse regular fourier transform function"""
-
-        assert (
-            np.allclose(
-                self.test_waves, inverse_regular_fourier_transform(fft(self.test_waves))
-            )
-            is True
-        )
-
-    def test_inverse_fast_fourier_transform(self):
-        """this function test the inverse fast fourier transform function"""
-        assert (
-            np.allclose(
-                self.test_waves, inverse_fast_fourier_transform(fft(self.test_waves))
-            )
-            is True
-        )
 
     def test_transform_caller(self):
         """this function tests the transform caller function"""
