@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plot_sound_wave(time, og_wave, axs, plot:int, title):
+def plot_sound_wave(time, og_wave, axs, plot: int, title):
     """this function plots a given sound wave using its sample rate and the audio data.
 
     Args:
@@ -19,7 +19,7 @@ def plot_sound_wave(time, og_wave, axs, plot:int, title):
         pass
 
 
-def plot_fourier_transform(transform, axs, plot:int, title):
+def plot_fourier_transform(transform, axs, plot: int, title):
     """this function plots the fourier transform of a given audio data
 
     Args:
@@ -45,7 +45,9 @@ def plot_fourier_transform(transform, axs, plot:int, title):
         pass
 
 
-def plot_all(sample_rate, og_wave, transform, noise_reduced_transform, noise_reduced_wave):
+def plot_all(
+    sample_rate, og_wave, transform, noise_reduced_transform, noise_reduced_wave
+):
     """this function plots the originafourier_transforml sound wave, the transformed sound wave and
     the fourier transform side by side
 
@@ -60,8 +62,12 @@ def plot_all(sample_rate, og_wave, transform, noise_reduced_transform, noise_red
 
     plot_sound_wave(time, og_wave, axs, plot=0, title="Original Sound Wave")
     plot_fourier_transform(transform, axs, plot=1, title="Fourier Transform")
-    plot_fourier_transform(noise_reduced_transform, axs, plot=2, title="Noise Reduced Fourier Transform")
-    plot_sound_wave(time, noise_reduced_wave, axs, plot=3, title="Noise Reduced Sound Wave")
+    plot_fourier_transform(
+        noise_reduced_transform, axs, plot=2, title="Noise Reduced Fourier Transform"
+    )
+    plot_sound_wave(
+        time, noise_reduced_wave, axs, plot=3, title="Noise Reduced Sound Wave"
+    )
 
     plt.style.use("seaborn")
     plt.show()
