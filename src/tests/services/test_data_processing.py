@@ -21,13 +21,8 @@ class test_data_processing(unittest.TestCase):
         self.assertEqual(sample_rate, 512)
         self.assertEqual(len(data), 512)
 
-        with pytest.raises(ValueError, match="input file must be a .wav file"):
-            sample_rate, data = input_checker("test")
-
-    def test_test_wave_generation(self):
-        """test that the test_wave_generation function returns the correct sample rate and data"""
         with io.StringIO() as buf, redirect_stdout(buf):
-            sample_rate, data = sample_wave_generation(verbose=True)
+            sample_rate, data = input_checker(None, verbose=True)
             print_output = buf.getvalue()
             print(print_output)
             self.assertIn(
@@ -38,8 +33,12 @@ class test_data_processing(unittest.TestCase):
             self.assertIn("duration of wave: 1 seconds", print_output)
             self.assertIn("sample rate: 512 samples per second", print_output)
             self.assertIn("frequencies of composite signal (in hz):", print_output)
+            self.assertIn("adding noise to composite wave", print_output)
             self.assertEqual(sample_rate, 512)
             self.assertEqual(len(data), 512)
+
+        with pytest.raises(ValueError, match="input file must be a .wav file"):
+            sample_rate, data = input_checker("test")
 
     def test_get_data(self):
         """test that the get_data function returns the correct sample rate and data"""

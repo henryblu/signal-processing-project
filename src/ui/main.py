@@ -69,7 +69,7 @@ def main():
         return
 
     sample_rate, composite_signal = input_checker(flags.input, flags.verbose)
-    
+
     og_fourier, nr_fourier, nr_signal = transform_caller(
         flags.regular_fourier_transform,
         flags.fast_fourier_transform,

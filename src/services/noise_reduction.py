@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def noise_reduction(fourier_transform, threadshold_level):
     """this function performs a simple noise reduction on a given fourier transform depended
     on the given threashold.
