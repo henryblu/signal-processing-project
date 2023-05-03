@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plot_sound_wave(time, og_wave, axs):
+def plot_sound_wave(time, og_wave, axs, plot:int, title):
     """this function plots a given sound wave using its sample rate and the audio data.
 
     Args:
@@ -11,15 +11,15 @@ def plot_sound_wave(time, og_wave, axs):
     """
 
     try:
-        axs[0].plot(time, og_wave)
-        axs[0].set_title("Original Sound Wave")
-        axs[0].set_xlabel("Time (s)")
-        axs[0].set_ylabel("Amplitude")
+        axs[plot].plot(time, og_wave)
+        axs[plot].set_title(title)
+        axs[plot].set_xlabel("Time (s)")
+        axs[plot].set_ylabel("Amplitude")
     except ValueError:
         pass
 
 
-def plot_fourier_transform(transform, axs):
+def plot_fourier_transform(transform, axs, plot:int, title):
     """this function plots the fourier transform of a given audio data
 
     Args:
@@ -37,15 +37,15 @@ def plot_fourier_transform(transform, axs):
         except ValueError:
             pass
 
-        axs[1].plot(transform)
-        axs[1].set_title("Fourier Transform")
-        axs[1].set_xlabel("Frequency (hz)")
-        axs[1].set_ylabel("Amplitude")
+        axs[plot].plot(transform)
+        axs[plot].set_title(title)
+        axs[plot].set_xlabel("Frequency (hz)")
+        axs[plot].set_ylabel("Amplitude")
     except ValueError:
         pass
 
 
-def plot_all(sample_rate, og_wave, transform):
+def plot_all(sample_rate, og_wave, transform, noise_reduced_transform, noise_reduced_wave):
     """this function plots the originafourier_transforml sound wave, the transformed sound wave and
     the fourier transform side by side
 
@@ -54,12 +54,14 @@ def plot_all(sample_rate, og_wave, transform):
         og_wave (np.array): the original audio data
         transform (np.array): the fourier transform of the audio data
     """
-    fig, axs = plt.subplots(2, 1)
+    fig, axs = plt.subplots(4, 1)
     fig.subplots_adjust(hspace=1)
     time = np.linspace(0, len(og_wave) / sample_rate, num=len(og_wave))
 
-    plot_sound_wave(time, og_wave, axs)
-    plot_fourier_transform(transform, axs)
+    plot_sound_wave(time, og_wave, axs, plot=0, title="Original Sound Wave")
+    plot_fourier_transform(transform, axs, plot=1, title="Fourier Transform")
+    plot_fourier_transform(noise_reduced_transform, axs, plot=2, title="Noise Reduced Fourier Transform")
+    plot_sound_wave(time, noise_reduced_wave, axs, plot=3, title="Noise Reduced Sound Wave")
 
     plt.style.use("seaborn")
     plt.show()
