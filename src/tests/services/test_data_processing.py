@@ -1,7 +1,7 @@
 import unittest
-import pytest
 import io
 from contextlib import redirect_stdout
+import pytest
 from services.data_processing import (
     input_checker,
     sample_wave_generation,
