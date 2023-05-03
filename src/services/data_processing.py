@@ -2,6 +2,7 @@ import numpy as np
 from scipy.io import wavfile as wav
 
 
+
 def input_checker(file, verbose=False):
     """this function is used to check if the input is valid
 
@@ -19,8 +20,9 @@ def input_checker(file, verbose=False):
         sample_rate, composite_signal = get_data(file)
     else:
         sample_rate, composite_signal = sample_wave_generation(verbose=verbose)
+        noisy_signal = generate_noisy_wave(composite_signal, verbose=verbose)
 
-    return sample_rate, composite_signal
+    return sample_rate, composite_signal, noisy_signal
 
 
 def sample_wave_generation(duration=1, sample_rate=512, verbose=False):
@@ -70,6 +72,23 @@ def sample_wave_generation(duration=1, sample_rate=512, verbose=False):
 
     return (sample_rate, composite_signal)
 
+def generate_noisy_wave(composite_signal, noise_level=.7, verbose=False):
+    """ this function adds noise to the composite wave
+
+    Args:
+        composite_signal (np.array): the composite wave
+        noise_level (float): the level of noise to be added
+        verbose (bool): if true the function will print out the wave specifications
+    
+    Returns:   
+        np.array: the noisy wave
+    """
+    if verbose:
+        print("adding noise to composite wave")
+    noise = np.random.randn(len(composite_signal))
+    noisy_signal = composite_signal + noise_level * noise
+
+    return noisy_signal
 
 def get_data(audio_file_path):
     """this function is used to convert the audiofile to a numpy array
