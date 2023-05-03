@@ -68,17 +68,19 @@ def main():
         p_test.run()
         return
 
-    sample_rate, composite_signal = input_checker(flags.input, flags.verbose)
-    fourier_transform, inverse = transform_caller(
+    sample_rate, composite_signal, noisy_signal = input_checker(flags.input, flags.verbose)
+
+    fourier_transform, noise_reduced_fourier_transform, noise_reduced_wave = transform_caller(
         flags.regular_fourier_transform,
         flags.fast_fourier_transform,
-        composite_signal,
+        noisy_signal,
     )
-    plot_all(sample_rate, composite_signal, fourier_transform)
+    
+    plot_all(sample_rate, composite_signal, fourier_transform, noise_reduced_fourier_transform, noise_reduced_wave)
 
     if flags.output is not None:
         # note that atm this should output the same soundwave as the input
-        output(sample_rate, inverse, flags.output)
+        output(sample_rate, noise_reduced_wave, flags.output)
 
     return
 
