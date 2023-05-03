@@ -1,4 +1,5 @@
 import numpy as np
+from services.noise_reduction import noise_reduction
 
 
 def transform_caller(rft, fft, composite_signal):
@@ -12,23 +13,26 @@ def transform_caller(rft, fft, composite_signal):
 
     Returns:
         np.array: the fourier transform of the audio data
-        np.array: the inverse fourier transform of the fourier transform
+        np.array: the noise reduced fourier transform
+        np.array: the inverse fourier transform of the noise reduced fourier transform
     """
     if rft and fft:
         raise ValueError("both rft and fft cannot be true")
 
     if rft:
         fourier_transform = regular_fourier_transform(composite_signal)
-        inverse = inverse_regular_fourier_transform(fourier_transform)
-    elif fft:
-        fourier_transform = fast_fourier_transform(composite_signal)
-        inverse = inverse_fast_fourier_transform(fourier_transform)
+        noise_reduced_fourier_transform = noise_reduction(fourier_transform, 15)
+        inverse = inverse_regular_fourier_transform(noise_reduced_fourier_transform)
+
     else:
-        print("no fourier transform selected")
-        print("defaulting to fast fourier transform")
+        if not fft:
+            print("no fourier transform selected")
+            print("defaulting to fast fourier transform")
         fourier_transform = fast_fourier_transform(composite_signal)
-        inverse = inverse_fast_fourier_transform(fourier_transform)
-    return fourier_transform, inverse
+        noise_reduced_fourier_transform = noise_reduction(fourier_transform, 15)
+        inverse = inverse_fast_fourier_transform(noise_reduced_fourier_transform)
+
+    return fourier_transform, noise_reduced_fourier_transform, inverse
 
 
 def regular_fourier_transform(audio_data):
