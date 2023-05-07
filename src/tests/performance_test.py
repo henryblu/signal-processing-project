@@ -1,13 +1,8 @@
 import time
 from scipy.fft import fft, ifft
+import numpy as np
 from memory_profiler import memory_usage
-from services.transforms import (
-    fast_fourier_transform,
-    inverse_fast_fourier_transform,
-    regular_fourier_transform,
-    inverse_regular_fourier_transform,
-)
-from services.data_processing import sample_wave_generation
+from services.transforms import transforms
 
 
 class performance_test:
@@ -18,13 +13,13 @@ class performance_test:
         self.samples = samples
 
         if self.samples == 1:
-            self.signal_list = [sample_wave_generation(verbose=verbose)[1]]
+            self.signal_list = [self.generate_signal(verbose=verbose)[1]]
             self.frequencies_list = [self.signal_list[0]]
             self.fourier_transform_list = [fft(self.signal_list[0])]
             self.inverse_transform_list = [ifft(self.fourier_transform_list[0])]
         else:
             self.signals_and_frequencies = [
-                sample_wave_generation() for i in range(self.samples)
+                self.generate_signal() for i in range(self.samples)
             ]
             self.signal_list = [
                 self.signals_and_frequencies[i][0] for i in range(self.samples)
@@ -38,6 +33,43 @@ class performance_test:
             self.inverse_transform_list = [
                 ifft(self.fourier_transform_list[i]) for i in range(self.samples)
             ]
+
+    def generate_signal(self):
+        """this function is used to generate a signal to be used in the test
+
+        Returns:
+            list[float]: a list of the signal generated
+            List[int]: a list of the frequencies used to generate the signal
+        """
+        frequency_list = [
+            np.random.randint(1, self.sample_rate),
+            np.random.randint(1, self.sample_rate),
+            np.random.randint(1, self.sample_rate),
+        ]
+        signal_1 = np.sin(
+            2
+            * np.pi
+            * frequency_list[0]
+            * np.arange(self.sample_rate * self.duration)
+            / self.sample_rate
+        )
+        signal_2 = np.sin(
+            2
+            * np.pi
+            * frequency_list[1]
+            * np.arange(self.sample_rate * self.duration)
+            / self.sample_rate
+        )
+        signal_3 = np.sin(
+            2
+            * np.pi
+            * frequency_list[2]
+            * np.arange(self.sample_rate * self.duration)
+            / self.sample_rate
+        )
+        audio_data = signal_1 + signal_2 + signal_3
+
+        return audio_data, frequency_list
 
     def run(self):
         print("Running the test suite")
@@ -71,6 +103,9 @@ class performance_test:
         """this function tests the home made fast fourier transform function using the scipy fft
         function if details are true, it will run a time and memory test as well
         """
+        t = transforms(
+            False,
+        )
         if self.details:
             print()
             print("unit test starting for algorithm:  fast fourier transform")

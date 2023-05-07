@@ -54,15 +54,16 @@ class audio_preprocessing:
             raise FileNotFoundError("input file not found") from exc
         print(type(self.audio_data[10]))
 
-
     def data_triming(self):
         """this function trims the audio data to remove any leading or trailing zeros
-        
+
         Raises:
             ValueError: if the input file is too long
         """
-        self.length = len(self.audio_data)	
-        self.front_trim = len(self.audio_data) - len(np.trim_zeros(self.audio_data, "f"))
+        self.length = len(self.audio_data)
+        self.front_trim = len(self.audio_data) - len(
+            np.trim_zeros(self.audio_data, "f")
+        )
         self.back_trim = len(self.audio_data) - len(np.trim_zeros(self.audio_data, "b"))
 
         self.audio_data = np.trim_zeros(self.audio_data)
@@ -145,6 +146,6 @@ class audio_preprocessing:
         new_sound_wave = np.concatenate((new_sound_wave, np.zeros(self.back_trim)))
         new_sound_wave = new_sound_wave.astype(np.int16)
         try:
-            wav.write(r'src\Data\output.wav', self.sample_rate, new_sound_wave)
+            wav.write(r"src\Data\output.wav", self.sample_rate, new_sound_wave)
         except FileNotFoundError:
             print("output path not found")

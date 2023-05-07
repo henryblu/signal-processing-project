@@ -6,7 +6,9 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from services.data_processing import audio_preprocessing
 from services.transforms import transforms
+
 from ui.visualisations import plot_all
+
 # from tests.performance_test import performance_test
 
 
@@ -63,29 +65,25 @@ def main():
     flags = flags_finder()
     print(flags)
 
-    '''if flags.performance_test != 0:
+    """if flags.performance_test != 0:
         p_test = performance_test(samples=flags.performance_test, verbose=flags.verbose)
         p_test.run()
         return
-    '''
+    """
     processing = audio_preprocessing(
         input_file=flags.input,
         output_file=flags.output,
         verbose=flags.verbose,
-    )
-    transform = transforms(
-        flags.regular_fourier_transform,
-        flags.fast_fourier_transform,
-        processing.audio_data,
     )
 
     t = transforms(
         flags.regular_fourier_transform,
         flags.fast_fourier_transform,
         processing.audio_data,
-        flags.verbose
+        flags.verbose,
     )
-    og_fourier, nr_fourier, nr_signal = t.run()
+    og_fourier = t.run_transform()
+
 
     plot_all(
         processing.sample_rate,

@@ -1,8 +1,10 @@
 import numpy as np
 from services.noise_reduction import noise_reduction
 
-class transforms():
+
+class transforms:
     """this class is used to perform fourier transforms on audio data"""
+
     def __init__(self, rft, fft, audio_data, verbose=False):
         """this function is used to initialize the class
 
@@ -17,52 +19,46 @@ class transforms():
         self.rft = rft
         self.fft = fft
         self.verbose = verbose
+        self.fourier_transform = None
+
         if rft and fft:
             raise ValueError("both rft and fft cannot be true")
-
-
-
-    def run(self):
-        """this function is used to call the appropreate transform
-
-        Args:
-            rft (bool): if true the regular fourier transform will be used
-            fft (bool): if true the fast fourier transform will be used
-            sample_rate (int): the sample rate of the audio data
-            composite_signal (np.array): the audio data
+        
+    def run_transform(self):
+        """ this function runs the correct type of fourier transform on the audio data
 
         Returns:
             np.array: the fourier transform of the audio data
-            np.array: the noise reduced fourier transform
-            np.array: the inverse fourier transform of the noise reduced fourier transform
         """
-        
         if self.rft:
-            fourier_transform = self.regular_fourier_transform(self.og_audio_data)
-            noise_reduced_fourier_transform = noise_reduction(fourier_transform, 15)
-            inverse = self.inverse_regular_fourier_transform(noise_reduced_fourier_transform)
-
-        else:
-            if not self.fft and self.verbose:
-                print("no fourier transform selected")
-                print("defaulting to fast fourier transform")
-                print()
+            self.fourier_transform = self.regular_fourier_transform(self.og_audio_data)
+        
+        else: 
             if np.log2(self.length) % 1 != 0:
                 if self.verbose:
                     print("the length of the audio data is not a power of 2")
                     print("using bluestein's fft")
                     print()
-                    fourier_transform = self.bluestein_fft(self.og_audio_data)
-                else:
-                    fourier_transform = self.fast_fourier_transform(self.og_audio_data)
-                noise_reduced_fourier_transform = noise_reduction(fourier_transform, 15)
-                inverse = self.inverse_fast_fourier_transform(noise_reduced_fourier_transform)
+                    self.fourier_transform = self.bluestein_fft(self.og_audio_data)
+            else:
+                self.fourier_transform = self.fast_fourier_transform(self.og_audio_data)
 
-        fourier_transform = np.abs(fourier_transform[:self.length])
-        noise_reduced_fourier_transform = np.abs(noise_reduced_fourier_transform[:self.length])
-        inverse = np.real(inverse[:self.length])
+        return(np.abs(self.fourier_transform[: self.length]))
+    
+    def run_inverse(self):
+        """this function runs the correct type of inverse fourier transform on the fourier transform
 
-        return fourier_transform, noise_reduced_fourier_transform, inverse
+        Returns:
+            np.array: the inverse fourier transform of the fourier transform
+        """
+        if self.rft:
+            inverse = self.inverse_regular_fourier_transform(self.fourier_transform)
+        
+        else:
+            inverse = self.inverse_fast_fourier_transform(self.fourier_transform)
+        
+        return(np.real(inverse[: self.length]).astype(np.int16))
+
 
 
     def regular_fourier_transform(self, audio_data):
@@ -80,7 +76,6 @@ class transforms():
             for q in range(N):
                 fourier_transform[k] += audio_data[q] * np.exp(-2j * np.pi * k * q / N)
         return fourier_transform
-
 
     def fast_fourier_transform(self, audio_data):
         """This function performs a fast fourier transform on a given audio data it only
@@ -105,7 +100,6 @@ class transforms():
         return np.concatenate(
             [even + factor[: N // 2] * odd, even + factor[N // 2 :] * odd]
         )
-
 
     def bluestein_fft(self, audio_data):
         """This function performs a Bluestein's algorithm Fourier transform on a given audio data
@@ -137,7 +131,6 @@ class transforms():
             [even + factor[: N // 2] * odd, even + factor[N // 2 :] * odd]
         )
 
-
     def inverse_regular_fourier_transform(self, fourier_transform):
         """this function performs an inverse regular fourier transform on a given fourier transform
 
@@ -158,7 +151,6 @@ class transforms():
 
         return inverse_fourier_transform / N
 
-
     def inverse_fast_fourier_transform(self, fourier_transform):
         """this function performs an inverse fast fourier transform on a given fourier transform
 
@@ -168,20 +160,20 @@ class transforms():
         Returns:
             np.array: the inverse fourier transform of the fourier transform
         """
-        
+
         N = len(fourier_transform)
         if N <= 1:
             return fourier_transform
         if N % 2 != 0:
             raise ValueError("size of audio_data must be a power of 2")
-        
+
         even = self.inverse_fast_fourier_transform(fourier_transform[:N:2])
         odd = self.inverse_fast_fourier_transform(fourier_transform[1:N:2])
 
         factor = np.exp(2j * np.pi * np.arange(N) / N)
-        return np.concatenate(
-            [even + factor[: N // 2] * odd, even + factor[N // 2 :] * odd]
-        ) / 2
-
-
-        
+        return (
+            np.concatenate(
+                [even + factor[: N // 2] * odd, even + factor[N // 2 :] * odd]
+            )
+            / 2
+        )
