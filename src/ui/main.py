@@ -4,10 +4,10 @@ import sys
 
 # this is used to import the modules from the parent directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from services.data_processing import input_checker, output
-from services.transforms import transform_caller
+from services.data_processing import audio_preprocessing
+from services.transforms import transforms
 from ui.visualisations import plot_all
-from tests.performance_test import performance_test
+# from tests.performance_test import performance_test
 
 
 def flags_finder():
@@ -63,30 +63,39 @@ def main():
     flags = flags_finder()
     print(flags)
 
-    if flags.performance_test != 0:
+    '''if flags.performance_test != 0:
         p_test = performance_test(samples=flags.performance_test, verbose=flags.verbose)
         p_test.run()
         return
-
-    sample_rate, composite_signal = input_checker(flags.input, flags.verbose)
-
-    og_fourier, nr_fourier, nr_signal = transform_caller(
+    '''
+    processing = audio_preprocessing(
+        input_file=flags.input,
+        output_file=flags.output,
+        verbose=flags.verbose,
+    )
+    transform = transforms(
         flags.regular_fourier_transform,
         flags.fast_fourier_transform,
-        composite_signal,
+        processing.audio_data,
     )
 
+    t = transforms(
+        flags.regular_fourier_transform,
+        flags.fast_fourier_transform,
+        processing.audio_data,
+        flags.verbose
+    )
+    og_fourier, nr_fourier, nr_signal = t.run()
+
     plot_all(
-        sample_rate,
-        composite_signal,
+        processing.sample_rate,
+        processing.audio_data,
         og_fourier,
         nr_fourier,
         nr_signal,
     )
 
-    if flags.output is not None:
-        # note that atm this should output the same soundwave as the input
-        output(sample_rate, nr_signal, flags.output)
+    processing.output(nr_signal)
 
     return
 
