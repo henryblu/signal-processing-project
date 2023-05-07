@@ -59,6 +59,8 @@ def plot_all(
     fig, axs = plt.subplots(4, 1)
     fig.subplots_adjust(hspace=1)
     time = np.linspace(0, len(og_wave) / sample_rate, num=len(og_wave))
+    # make the noise reduced wave the same length as the original wave
+    noise_reduced_wave = noise_reduced_wave[: len(og_wave)]
 
     plot_sound_wave(time, og_wave, axs, plot=0, title="Original Sound Wave")
     plot_fourier_transform(transform, axs, plot=1, title="Fourier Transform")
