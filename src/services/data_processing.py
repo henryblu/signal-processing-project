@@ -6,7 +6,7 @@ class audio_preprocessing:
     """this class is used to handel the audio file processing or the random audio data generation"""
 
     def __init__(
-        self, input_file=None, output_file=r"src\data\output.wav", verbose=False
+        self, input_file=None, output_file=r"src\Data\output.wav", verbose=False
     ):
         """this function is used to initialize the audio_processing class
 
@@ -27,7 +27,9 @@ class audio_preprocessing:
         self.sample_rate = None
         self.duration = None
         self.audio_data = None
-        self.og_length = None
+        self.front_trim = None
+        self.back_trim = None
+        self.length = None
         self.noise_level = None
 
         if self.input_file is not None:
@@ -50,6 +52,7 @@ class audio_preprocessing:
             self.sample_rate, self.audio_data = wav.read(self.input_file)
         except FileNotFoundError as exc:
             raise FileNotFoundError("input file not found") from exc
+        print(type(self.audio_data[10]))
 
 
     def data_triming(self):
@@ -58,10 +61,14 @@ class audio_preprocessing:
         Raises:
             ValueError: if the input file is too long
         """
-        self.og_length = len(self.audio_data)
+        self.length = len(self.audio_data)	
+        self.front_trim = len(self.audio_data) - len(np.trim_zeros(self.audio_data, "f"))
+        self.back_trim = len(self.audio_data) - len(np.trim_zeros(self.audio_data, "b"))
+
         self.audio_data = np.trim_zeros(self.audio_data)
+
         if len(self.audio_data) > 2**16:
-            raise ValueError("input file is too long \n max length is 2^16 \n current length is {}".format(len(self.audio_data)))
+            raise ValueError("input file is too long")
 
     def sample_wave_generation(self):
         """
@@ -133,7 +140,11 @@ class audio_preprocessing:
         Raises:
             FileNotFoundError: if the output file path is not found
         """
+
+        new_sound_wave = np.concatenate((np.zeros(self.front_trim), new_sound_wave))
+        new_sound_wave = np.concatenate((new_sound_wave, np.zeros(self.back_trim)))
+        new_sound_wave = new_sound_wave.astype(np.int16)
         try:
-            wav.write(self.output_file_path, self.sample_rate, new_sound_wave)
+            wav.write(r'src\Data\output.wav', self.sample_rate, new_sound_wave)
         except FileNotFoundError:
             print("output path not found")
