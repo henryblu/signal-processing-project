@@ -2,8 +2,8 @@ import numpy as np
 from scipy.io import wavfile as wav
 
 
-class audio_preprocessing:
-    """this class is used to handel the audio file processing or the random audio data generation"""
+class AusioFileProcessing:
+    """this class is used to handel audio file processing"""
 
     def __init__(
         self, input_file=None, output_file=r"src\Data\output.wav", verbose=False
@@ -11,9 +11,12 @@ class audio_preprocessing:
         """this function is used to initialize the audio_processing class
 
         Args:
-            input_file (str): the path to the input file. Defaults to None.
-            output_file (str, optional): the path to the output file. Defaults to r"src\data\output.wav".
-            verbose (bool, optional): whether or not to print verbose output. Defaults to False.
+            input_file (str): the path to the input file.
+                Defaults to None.
+            output_file (str, optional): the path to the output file.
+                Defaults to ("src\\data\\output.wav").
+            verbose (bool, optional): whether or not to print verbose output.
+                Defaults to False.
 
         Raises:
             ValueError: if the input file is not a .wav file
@@ -24,30 +27,33 @@ class audio_preprocessing:
         self.input_file = input_file
         self.output_file = output_file
         self.verbose = verbose
-        self.sample_rate = None
-        self.duration = None
+        self.sample_rate = 2**12
         self.audio_data = None
         self.front_trim = None
         self.back_trim = None
         self.length = None
-        self.noise_level = None
+        self.noise_level = 0.1
 
-        if self.input_file is not None:
-            if self.input_file[-4:] != ".wav":
-                raise ValueError("input file must be a .wav file")
-            self.get_data()
-            self.data_triming()
-            self.duration = len(self.audio_data) / self.sample_rate
-        else:
-            self.sample_wave_generation()
-            self.add_noise()
+        self.get_data()
+        self.data_triming()
+
+    def get_audio_data(self):
+        """Returns the audio data as a numpy array."""
+        return self.audio_data
+
+    def get_sample_rate(self):
+        """Returns the sample rate of the audio data."""
+        return self.sample_rate
 
     def get_data(self):
         """this function is used to convert the audiofile to a numpy array
 
         Raises:
+            ValueError: if the input file is not a .wav file
             FileNotFoundError: if the input file is not found
         """
+        if self.input_file[-4:] != ".wav":
+            raise ValueError("input file must be a .wav file")
         try:
             self.sample_rate, self.audio_data = wav.read(self.input_file)
         except FileNotFoundError as exc:
@@ -71,67 +77,7 @@ class audio_preprocessing:
         if len(self.audio_data) > 2**16:
             raise ValueError("input file is too long")
 
-    def sample_wave_generation(self):
-        """
-        this function generates a composite wavfe of three random waves of a given
-        sample rate and duration
-
-        """
-
-        if self.verbose:
-            print()
-            print(
-                "no file specified, generating random composite wave of 3 frequencies"
-            )
-
-        frequency_list = [
-            np.random.randint(1, self.sample_rate),
-            np.random.randint(1, self.sample_rate),
-            np.random.randint(1, self.sample_rate),
-        ]
-        signal_1 = np.sin(
-            2
-            * np.pi
-            * frequency_list[0]
-            * np.arange(self.sample_rate * self.duration)
-            / self.sample_rate
-        )
-        signal_2 = np.sin(
-            2
-            * np.pi
-            * frequency_list[1]
-            * np.arange(self.sample_rate * self.duration)
-            / self.sample_rate
-        )
-        signal_3 = np.sin(
-            2
-            * np.pi
-            * frequency_list[2]
-            * np.arange(self.sample_rate * self.duration)
-            / self.sample_rate
-        )
-        self.audio_data = signal_1 + signal_2 + signal_3
-
-        if self.verbose:
-            print()
-            print("wave specifications: ")
-            print("    duration of wave: " + str(self.duration) + " seconds")
-            print("    sample rate: " + str(self.sample_rate) + " samples per second")
-            print(
-                "    frequencies of composite signal (in hz): "
-                + ", ".join([str(x) + "hz" for x in frequency_list])
-            )
-            print()
-
-    def add_noise(self):
-        """this function adds noise to the composite wave"""
-        if self.verbose:
-            print("adding noise to composite wave")
-
-        noise = np.random.randn(len(self.audio_data))
-        self.audio_data += self.noise_level * noise
-
-    def output(self, new_sound_wave):
+    def output(self, new_sound_wave, output_file=r"src\Data\output.wav"):
         """this function is used to output the new sound wave to a file.
         if no file is specified then the default file is used
 
@@ -141,11 +87,10 @@ class audio_preprocessing:
         Raises:
             FileNotFoundError: if the output file path is not found
         """
-
         new_sound_wave = np.concatenate((np.zeros(self.front_trim), new_sound_wave))
         new_sound_wave = np.concatenate((new_sound_wave, np.zeros(self.back_trim)))
         new_sound_wave = new_sound_wave.astype(np.int16)
         try:
-            wav.write(r"src\Data\output.wav", self.sample_rate, new_sound_wave)
+            wav.write(output_file, self.sample_rate, new_sound_wave)
         except FileNotFoundError:
             print("output path not found")
