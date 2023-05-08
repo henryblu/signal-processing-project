@@ -90,8 +90,6 @@ class Transforms:
         N = len(audio_data)
         if N <= 1:
             return audio_data
-        if N % 2 != 0:
-            raise ValueError("size of audio_data must be a power of 2")
 
         even = self.fast_fourier_transform(audio_data[:N:2])
         odd = self.fast_fourier_transform(audio_data[1:N:2])
@@ -163,8 +161,6 @@ class Transforms:
         N = len(fourier_transform)
         if N <= 1:
             return fourier_transform
-        if N % 2 != 0:
-            raise ValueError("size of audio_data must be a power of 2")
 
         even = self.inverse_fast_fourier_transform(fourier_transform[:N:2])
         odd = self.inverse_fast_fourier_transform(fourier_transform[1:N:2])
