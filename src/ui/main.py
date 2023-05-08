@@ -3,12 +3,13 @@ import sys
 
 # this is used to import the modules from the parent directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from services.data_processing import AusioFileProcessing
+from services.data_processing import AudioFileProcessing
 from services.sample_wave import SampleWave
 from services.transforms import Transforms
 from services.transform_alternations import TransformAlterations
 from ui.visualisations import plot_all
 from ui.flags import flags_finder
+from ui.alterations import run_alterations
 
 # from tests.performance_test import performance_test
 
@@ -24,7 +25,7 @@ def main():
         return
     """
     if flags.input is not None:
-        processing = AusioFileProcessing(
+        processing = AudioFileProcessing(
             input_file=flags.input,
             output_file=flags.output,
             verbose=flags.verbose,
@@ -38,14 +39,12 @@ def main():
         flags.verbose,
     )
 
-    ta = TransformAlterations()
-
     audio_data = processing.get_audio_data()
     sample_rate = processing.get_sample_rate()
 
     og_fourier = t.run_transform(audio_data)
 
-    altered_fourier = ta.run(og_fourier)
+    altered_fourier = run_alterations(og_fourier)
 
     altered_signal = t.run_inverse(altered_fourier)
 
