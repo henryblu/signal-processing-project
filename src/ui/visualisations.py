@@ -45,9 +45,7 @@ def plot_fourier_transform(transform, axs, plot: int, title):
         pass
 
 
-def plot_all(
-    sample_rate, og_wave, transform, noise_reduced_transform, noise_reduced_wave
-):
+def plot_all(sample_rate, og_wave, transform, altered_transform, noise_reduced_wave):
     """this function plots the originafourier_transforml sound wave, the transformed sound wave and
     the fourier transform side by side
 
@@ -57,7 +55,9 @@ def plot_all(
         transform (np.array): the fourier transform of the audio data
     """
     fig, axs = plt.subplots(4, 1)
-    fig.subplots_adjust(hspace=1)
+    fig.subplots_adjust(hspace=2)
+    # make the subplots bigger
+    fig.set_size_inches(10, 6)
     time = np.linspace(0, len(og_wave) / sample_rate, num=len(og_wave))
     # make the noise reduced wave the same length as the original wave
     noise_reduced_wave = noise_reduced_wave[: len(og_wave)]
@@ -65,11 +65,9 @@ def plot_all(
     plot_sound_wave(time, og_wave, axs, plot=0, title="Original Sound Wave")
     plot_fourier_transform(transform, axs, plot=1, title="Fourier Transform")
     plot_fourier_transform(
-        noise_reduced_transform, axs, plot=2, title="Noise Reduced Fourier Transform"
+        altered_transform, axs, plot=2, title="Altered Fourier Transform"
     )
-    plot_sound_wave(
-        time, noise_reduced_wave, axs, plot=3, title="Noise Reduced Sound Wave"
-    )
+    plot_sound_wave(time, noise_reduced_wave, axs, plot=3, title="Altered Sound Wave")
 
     plt.style.use("seaborn")
     plt.show()
