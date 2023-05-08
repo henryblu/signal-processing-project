@@ -10,15 +10,13 @@ class test_transforms(unittest.TestCase):
 
     def setUp(self):
         self.test_file = "src/tests/test_data/test_audio_data.wav"
-        self.test_wave_power_2 = SampleWave(
-            sample_rate=512
-        ).generate_composite_wave()
+        self.test_wave_power_2 = SampleWave(sample_rate=512).generate_composite_wave()
         self.test_wave_not_power_2 = SampleWave(
             sample_rate=500
         ).generate_composite_wave()
         self.test_fourier_transform = np.fft.fft(self.test_wave_power_2)
 
-    def test_init(self): 
+    def test_init(self):
         """this function tests the init function"""
         with pytest.raises(ValueError, match="both rft and fft cannot be true"):
             Transforms(True, True)
@@ -29,7 +27,9 @@ class test_transforms(unittest.TestCase):
         # check that the outputs shape is the same as np.fft.rfft
 
         assert np.allclose(
-            t.run_transform(audio_data=self.test_wave_power_2)[: len(self.test_wave_power_2) // 2 + 1],
+            t.run_transform(audio_data=self.test_wave_power_2)[
+                : len(self.test_wave_power_2) // 2 + 1
+            ],
             np.fft.rfft(self.test_wave_power_2),
         )
 
@@ -38,7 +38,6 @@ class test_transforms(unittest.TestCase):
             t.run_transform(audio_data=self.test_wave_power_2),
             np.fft.fft(self.test_wave_power_2),
         )
-
 
     def test_run_inverse(self):
         """this function tests the run inverse function"""
