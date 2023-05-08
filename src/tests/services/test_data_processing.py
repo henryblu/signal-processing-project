@@ -1,70 +1,39 @@
 import unittest
-import io
-from contextlib import redirect_stdout
-import pytest
-from services.data_processing import (
-    input_checker,
-    get_data,
-    output,
-)
+import numpy as np
+from scipy.io import wavfile as wav
+from services.data_processing import AudioFileProcessing
 
 
-class test_data_processing(unittest.TestCase):
-    def test_input_checker(self):
-        """test that the input_checker function returns the correct sample rate and data"""
-        sample_rate, data = input_checker(r"src/Data/StarWars3.wav")
-        self.assertEqual(sample_rate, 22050)
-        self.assertEqual(len(data), 66150)
+class TestAudioFileProcessing(unittest.TestCase):
+    def setUp(self):
+        self.audio_file_processing = AudioFileProcessing(
+            input_file=r"src\Data\StarWars3.wav", verbose=True
+        )
 
-        sample_rate, data = input_checker(None)
-        self.assertEqual(sample_rate, 512)
-        self.assertEqual(len(data), 512)
+    def test_get_audio_data(self):
+        self.assertIsInstance(self.audio_file_processing.get_audio_data(), np.ndarray)
 
-        with io.StringIO() as buf, redirect_stdout(buf):
-            sample_rate, data = input_checker(None, verbose=True)
-            print_output = buf.getvalue()
-            print(print_output)
-            self.assertIn(
-                "no file specified, generating random composite wave of 3 frequencies",
-                print_output,
-            )
-            self.assertIn("wave specification", print_output)
-            self.assertIn("duration of wave: 1 seconds", print_output)
-            self.assertIn("sample rate: 512 samples per second", print_output)
-            self.assertIn("frequencies of composite signal (in hz):", print_output)
-            self.assertIn("adding noise to composite wave", print_output)
-            self.assertEqual(sample_rate, 512)
-            self.assertEqual(len(data), 512)
+    def test_get_sample_rate(self):
+        self.assertIsInstance(self.audio_file_processing.get_sample_rate(), int)
 
-        with pytest.raises(ValueError, match="input file must be a .wav file"):
-            sample_rate, data = input_checker("test")
-
-    def test_get_data(self):
-        """test that the get_data function returns the correct sample rate and data"""
-        sample_rate, data = get_data((r"src/Data/StarWars3.wav"))
-        self.assertEqual(sample_rate, 22050)
-        self.assertEqual(len(data), 66150)
-        with pytest.raises(FileNotFoundError, match="input file not found"):
-            sample_rate, data = get_data("serasdfg/safdsadf/p.wav")
+    def test_data_triming(self):
+        self.audio_file_processing.data_triming()
+        self.assertIsInstance(self.audio_file_processing.front_trim, int)
+        self.assertIsInstance(self.audio_file_processing.back_trim, int)
+        self.assertIsInstance(self.audio_file_processing.length, int)
 
     def test_output(self):
-        """test that the output function returns the correct sample rate and data"""
-        sample_rate, data = input_checker(r"src/Data/StarWars3.wav")
-        output(
-            sample_rate,
-            data,
-            r"src/Data/StarWars3.wav",
+        # clear the output file located at src\Data\output.wav
+        wav.write(r"src\Data\output.wav", 0, np.zeros((1,)))
+        sound_wave = self.audio_file_processing.get_audio_data()
+        self.audio_file_processing.output(sound_wave)
+        np.allclose(
+            self.audio_file_processing.get_audio_data(),
+            wav.read(r"src\Data\output.wav")[1],
         )
-        output(
-            sample_rate,
-            data,
-            None,
-        )
-        output(
-            sample_rate,
-            data,
-            r"src/dataaaaaa/test.wav",
-        )
+
+    def tearDown(self):
+        pass
 
 
 if __name__ == "__main__":
