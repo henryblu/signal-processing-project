@@ -4,9 +4,9 @@ import sys
 # this is used to import the modules from the parent directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from services.data_processing import AusioFileProcessing
-from services.sample import SampleWave
+from services.sample_wave import SampleWave
 from services.transforms import Transforms
-from services.transformalternations import TransformAlterations
+from services.transform_alternations import TransformAlterations
 from ui.visualisations import plot_all
 from ui.flags import flags_finder
 
