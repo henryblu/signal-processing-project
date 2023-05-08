@@ -5,7 +5,7 @@ from scipy.io import wavfile as wav
 class SampleWave:
     """this class is used to handel sample random audio data generation"""
 
-    def __init__(self, verbose=False):
+    def __init__(self, verbose=False, sample_rate=512, duration=1, noise_amplitude=1):
         """this class is used to generate a composite wave of three random sine waves
 
         Args:
@@ -13,9 +13,9 @@ class SampleWave:
                 Defaults to False.
         """
         self.verbose = verbose
-        self.sample_rate = 512
-        self.duration = 1
-        self.noise_amplitude = 1
+        self.sample_rate = sample_rate
+        self.duration = duration
+        self.noise_amplitude = noise_amplitude
         self.audio_data = self.generate_composite_wave()
 
     def get_audio_data(self):
