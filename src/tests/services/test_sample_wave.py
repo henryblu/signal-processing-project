@@ -22,7 +22,7 @@ class TestSampleWave(unittest.TestCase):
 
     def test_output(self):
         audio_data = self.sample_wave.generate_composite_wave()
-        output_file = "test_output.wav"
+        output_file = "src/tests/Data/test_output.wav"
         self.sample_wave.output(audio_data, output_file)
         _, read_audio_data = wav.read(output_file)
         self.assertEqual(read_audio_data.shape, audio_data.shape)

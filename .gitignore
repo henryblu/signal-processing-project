@@ -4,3 +4,4 @@ __pycache__
 .coverage
 src/Data/output.wav
 documentation/learning.ipynb
+src/tests/Data/test_output.wav
