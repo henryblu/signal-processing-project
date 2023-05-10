@@ -31,7 +31,6 @@ class AudioFileProcessing:
         self.data_triming()
         self.front_trim = 0
         self.back_trim = 0
-        self.length = None
         self.noise_level = 0.1
 
     def get_audio_data(self):
@@ -64,7 +63,6 @@ class AudioFileProcessing:
         Raises:
             ValueError: if the input file is too long
         """
-        self.length = len(self.audio_data)
         self.front_trim = len(self.audio_data) - len(
             np.trim_zeros(self.audio_data, "f")
         )
