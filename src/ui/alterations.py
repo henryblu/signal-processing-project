@@ -48,7 +48,7 @@ def run_alterations(old_fourier_transform):
                 old_fourier_transform, max_frequency
             )
             break
-        elif user_input == "2":
+        if user_input == "2":
             while True:
                 try:
                     min_frequency = int(
@@ -69,7 +69,7 @@ def run_alterations(old_fourier_transform):
                 old_fourier_transform, min_frequency
             )
             break
-        elif user_input == "3":
+        if user_input == "3":
             while True:
                 threadshold_level = input(
                     "Please enter the desired threadshold_level (0 to 100): "
@@ -90,11 +90,10 @@ def run_alterations(old_fourier_transform):
             )
 
             break
-        elif user_input == "4":
+        if user_input == "4":
             altered_fourier_transform = old_fourier_transform
             break
-        else:
-            print("Invalid input, please try again")
-            print()
+        print("Invalid input, please try again")
+        print()
 
     return altered_fourier_transform
