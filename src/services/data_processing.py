@@ -90,5 +90,5 @@ class AudioFileProcessing:
         new_sound_wave = new_sound_wave.astype(np.int16)
         try:
             wav.write(output_file, self.sample_rate, new_sound_wave)
-        except FileNotFoundError:
-            print("output path not found")
+        except FileNotFoundError as exc:
+            raise FileNotFoundError("The specified output path does not exist.") from exc
