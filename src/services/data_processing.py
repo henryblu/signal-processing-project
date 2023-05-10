@@ -23,15 +23,13 @@ class AudioFileProcessing:
             FileNotFoundError: if the input file is not found
             ValueError: if the input file is too long
         """
-
-        self.input_file = input_file
         self.output_file = output_file
         self.verbose = verbose
-        self.sample_rate, self.audio_data = self.get_data(self.input_file)
-        self.data_triming()
         self.front_trim = 0
         self.back_trim = 0
         self.noise_level = 0.1
+        self.sample_rate, self.audio_data = self.get_data(input_file)
+        self.data_triming()
 
     def get_audio_data(self):
         """Returns the audio data as a numpy array."""
@@ -50,6 +48,7 @@ class AudioFileProcessing:
         """
         if input_file[-4:] != ".wav":
             raise ValueError("input file must be a .wav file")
+
         try:
             sample_rate, audio_data = wav.read(input_file)
         except FileNotFoundError as exc:
@@ -83,12 +82,12 @@ class AudioFileProcessing:
         Raises:
             FileNotFoundError: if the output file path is not found
         """
-        if self.front_trim > 0:
-            new_sound_wave = np.concatenate((np.zeros(self.front_trim), new_sound_wave))
-        if self.back_trim > 0:
-            new_sound_wave = np.concatenate((new_sound_wave, np.zeros(self.back_trim)))
+        new_sound_wave = np.concatenate((np.zeros(self.front_trim), new_sound_wave))
+        new_sound_wave = np.concatenate((new_sound_wave, np.zeros(self.back_trim)))
         new_sound_wave = new_sound_wave.astype(np.int16)
         try:
             wav.write(output_file, self.sample_rate, new_sound_wave)
         except FileNotFoundError as exc:
-            raise FileNotFoundError("The specified output path does not exist.") from exc
+            raise FileNotFoundError(
+                "The specified output path does not exist."
+            ) from exc

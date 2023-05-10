@@ -130,5 +130,7 @@ class SampleWave:
         """
         try:
             wav.write(output_file, self.sample_rate, new_sound_wave)
-        except FileNotFoundError:
-            print("The specified output path does not exist.")
+        except FileNotFoundError as exc:
+            raise FileNotFoundError(
+                "The specified output path does not exist."
+            ) from exc

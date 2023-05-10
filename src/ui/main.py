@@ -6,7 +6,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from services.data_processing import AudioFileProcessing
 from services.sample_wave import SampleWave
 from services.transforms import Transforms
-from services.transform_alternations import TransformAlterations
 from ui.visualisations import plot_all
 from ui.flags import flags_finder
 from ui.alterations import run_alterations
