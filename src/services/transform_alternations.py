@@ -6,16 +6,14 @@ def high_pitch_reduction(fourier_transform, max_frequency=0):
 
     Args:
         fourier_transform (np.array): the fourier transform to be noise reduced
-        threadshold_level (int): the threashold is what persent of the max value
-                                we want to make the cut off point (min = 0, max = 100)
+        max_frequency (int): the cutoff frequency for which all frequencies above will be set to 0
+            defaults to 0
 
     Returns:
         np.array: the pitch reduced fourier transform
     """
-    max_len = len(fourier_transform) if len(fourier_transform) < 20000 else 20000
-    threadshold = max_frequency / 100
     new_transform = np.copy(fourier_transform)
-    new_transform[int(max_len * (1 - threadshold)) : len(fourier_transform)] = 0
+    new_transform[max_frequency : len(fourier_transform)] = 0
     return new_transform
 
 
@@ -24,16 +22,14 @@ def low_pitch_reduction(fourier_transform, min_frequency=0):
 
     Args:
         fourier_transform (np.array): the fourier transform to be noise reduced
-        threadshold_level (int): the threashold is what persent of the max value
-                                we want to make the cut off point (min = 0, max = 100)
+        min_frequency (int): the cutoff frequency for which all frequencies below will be set to 0
+            defaults to 0
 
     Returns:
         np.array: the pitch reduced fourier transform
     """
-    cutoff = len(fourier_transform) if len(fourier_transform) < 20000 else 20000
-    threadshold = min_frequency / 100
     new_transform = np.copy(fourier_transform)
-    new_transform[0 : int(cutoff * threadshold)] = 0
+    new_transform[0:min_frequency] = 0
     return new_transform
 
 

@@ -56,7 +56,8 @@ def main():
     )
 
     if flags.verbose:
-        print("outputting composite wave to file")
+        print()
+        print("outputting composite wave to file: " + flags.output + "\n")
 
     processing.output(altered_signal, output_file=flags.output)
 
