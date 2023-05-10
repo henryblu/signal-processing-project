@@ -1,5 +1,6 @@
 import argparse
 
+
 def flags_finder():
     """this function is used to find all the flags that have been set.
 
