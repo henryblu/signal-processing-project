@@ -11,7 +11,8 @@ class Transforms:
             rft (bool): if true the regular fourier transform will be used
             fft (bool): if true the fast fourier transform will be used
             audio_data (np.array): the audio data
-            verbose (bool, optional): if true the class will print out information. Defaults to False.
+            verbose (bool, optional): if true the class will print out information. 
+                Defaults to False.
         """
         self.verbose = verbose
         self.fourier_transform = None
