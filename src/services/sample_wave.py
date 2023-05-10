@@ -5,7 +5,7 @@ from scipy.io import wavfile as wav
 class SampleWave:
     """this class is used to handel sample random audio data generation"""
 
-    def __init__(self, verbose=False, sample_rate=512, duration=1, noise_amplitude=1):
+    def __init__(self, verbose=False, sample_rate=256, duration=1, noise_amplitude=1):
         """this class is used to generate a composite wave of three random sine waves
 
         Args:
@@ -128,6 +128,7 @@ class SampleWave:
             output_file (str, optional): the path to the output file.
                 Defaults to ("src/data/output.wav").
         """
+        new_sound_wave = new_sound_wave.astype(np.int16)
         try:
             wav.write(output_file, self.sample_rate, new_sound_wave)
         except FileNotFoundError as exc:
