@@ -121,12 +121,12 @@ class SampleWave:
 
         return audio_data
 
-    def output(self, new_sound_wave, output_file=r"src\Data\output.wav"):
+    def output(self, new_sound_wave, output_file=r"src/Data/output.wav"):
         """this function outputs the composite wave to a file
         Args:
             audiodata (numpy array): the audio data to be outputted
             output_file (str, optional): the path to the output file.
-                Defaults to ("src\\data\\output.wav").
+                Defaults to ("src/data/output.wav").
         """
         try:
             wav.write(output_file, self.sample_rate, new_sound_wave)

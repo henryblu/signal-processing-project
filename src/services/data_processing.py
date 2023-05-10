@@ -6,7 +6,7 @@ class AudioFileProcessing:
     """this class is used to handel audio file processing"""
 
     def __init__(
-        self, input_file=None, output_file=r"src\Data\output.wav", verbose=False
+        self, input_file=None, output_file=r"src/Data/output.wav", verbose=False
     ):
         """this function is used to initialize the audio_processing class
 
@@ -14,7 +14,7 @@ class AudioFileProcessing:
             input_file (str): the path to the input file.
                 Defaults to None.
             output_file (str, optional): the path to the output file.
-                Defaults to ("src\\data\\output.wav").
+                Defaults to (r"src/data/output.wav").
             verbose (bool, optional): whether or not to print verbose output.
                 Defaults to False.
 
@@ -73,7 +73,7 @@ class AudioFileProcessing:
         if len(self.audio_data) > 2**16:
             raise ValueError("input file is too long")
 
-    def output(self, new_sound_wave, output_file=r"src\Data\output.wav"):
+    def output(self, new_sound_wave, output_file=r"src/Data/output.wav"):
         """this function is used to output the new sound wave to a file.
         if no file is specified then the default file is used
 

@@ -7,7 +7,7 @@ from services.data_processing import AudioFileProcessing
 class TestAudioFileProcessing(unittest.TestCase):
     def setUp(self):
         self.audio_file_processing = AudioFileProcessing(
-            input_file=r"src\Data\StarWars3.wav", verbose=True
+            input_file=r"src/Data/StarWars3.wav", verbose=True
         )
         self.assertIsInstance(self.audio_file_processing.noise_level, float)
         self.assertIsInstance(self.audio_file_processing.audio_data, np.ndarray)
@@ -25,13 +25,13 @@ class TestAudioFileProcessing(unittest.TestCase):
 
 
     def test_output(self):
-        # clear the output file located at src\Data\output.wav
-        wav.write(r"src\Data\output.wav", 0, np.zeros((1,)))
+        # clear the output file located at src/Data/output.wav
+        wav.write(r"src/Data/StarWars3.wav", 0, np.zeros((1,)))
         sound_wave = self.audio_file_processing.get_audio_data()
         self.audio_file_processing.output(sound_wave)
         np.allclose(
             self.audio_file_processing.get_audio_data(),
-            wav.read(r"src\Data\output.wav")[1],
+            wav.read(r"src/Data/output.wav")[1],
         )
 
     def tearDown(self):

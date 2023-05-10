@@ -18,7 +18,7 @@ def flags_finder():
         "-o",
         "--output",
         help="specifies the file to be written to default is ./data/output.wav",
-        default=r"src\Data\output.wav",
+        default=r"src/Data/output.wav",
     )
     parser.add_argument(
         "-v",
