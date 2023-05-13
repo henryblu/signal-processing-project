@@ -1,13 +1,12 @@
 import numpy as np
 
 
-def high_pitch_reduction(fourier_transform, max_frequency=0):
+def high_pitch_reduction(fourier_transform, max_frequency):
     """This function sets high frequency components of the fourier transform to 0
 
     Args:
         fourier_transform (np.array): the fourier transform to be noise reduced
         max_frequency (int): the cutoff frequency for which all frequencies above will be set to 0
-            defaults to 0
 
     Returns:
         np.array: the pitch reduced fourier transform
