@@ -23,7 +23,6 @@ class test_transforms(unittest.TestCase):
     def test_run_transform(self):
         """this function tests the run transform function"""
         t = Transforms(True, False, verbose=True)
-        # check that the outputs shape is the same as np.fft.rfft
 
         assert np.allclose(
             t.run_transform(audio_data=self.test_wave_power_2)[
@@ -37,6 +36,7 @@ class test_transforms(unittest.TestCase):
             t.run_transform(audio_data=self.test_wave_power_2),
             np.fft.fft(self.test_wave_power_2),
         )
+
         self.assertEqual(
             len(t.run_transform(audio_data=self.test_wave_not_power_2)), 512
         )
