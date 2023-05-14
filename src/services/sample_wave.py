@@ -113,9 +113,6 @@ class SampleWave:
         Returns:
             numpy array: the audio data with noise added
         """
-        if self.verbose:
-            print("adding noise to composite wave")
-
         noise = np.random.randn(len(audio_data))
         audio_data += noise_level * noise
 
