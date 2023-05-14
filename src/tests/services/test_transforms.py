@@ -1,11 +1,11 @@
 import unittest
 import numpy as np
 import pytest
-from services.transforms import Transforms
-from services.sample_wave import SampleWave
+from src.services.transforms import Transforms
+from src.services.sample_wave import SampleWave
 
 
-class test_transforms(unittest.TestCase):
+class TestTransforms(unittest.TestCase):
     """this class tests the transforms class"""
 
     def setUp(self):
@@ -39,6 +39,12 @@ class test_transforms(unittest.TestCase):
 
         self.assertEqual(
             len(t.run_transform(audio_data=self.test_wave_not_power_2)), 512
+        )
+        t = Transforms(False, True, verbose=False)
+
+        # make sure the data is only complex numbers exept for the first value whic hshould be 0
+        assert np.all(
+            np.iscomplex(t.run_transform(audio_data=self.test_wave_not_power_2)[1:])
         )
 
     def test_run_inverse(self):
