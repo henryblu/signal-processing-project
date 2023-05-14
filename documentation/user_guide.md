@@ -13,7 +13,7 @@
 
 3. install dependencies using poetry using comand:
         
-        poetry install
+        ```poetry install```
 
 - now you should be ready to run the program!
 
@@ -23,22 +23,40 @@ starting from path/to/repository/signal-processing-project/
 
 - To execute this program please run: 
 
-        poetry run python src/ui/main.py 
+        ```poetry run python src/ui/main.py```
 
 - there are a number of flags that can be set, to discover them use:
 
-        poetry run python src/ui/main.py -h
+        ```poetry run python src/ui/main.py -h```
 
 - if you want to run the test suite, please run: 
 
-        pytest src
-
+        ```python -m pytest```
 
 
 ## Program inputs
 
-- using the --input flag, you can specify the input .wav file you want to decompose
-        
-        *#1 at the moment, the fast fourier transform only works with files which have a length which is power of two
-        *#2 regular fourier transforms are really, really slow for imputs, so watch out. 
+- using the --input flag, you can specify the input .wav file you want to decompose and alter.
+        limited to .wav files
+        limited to files of size less then 70000 data points
+
+        For example:
+                ```poetry run python src/ui/main.py --input src/data/StarWars3.wav```
+        will run the program on the StarWars3.wav file in the src/data/ directory.
+
+- if no input is specified, the program will generate a random composite wave of 3 frequencies.
+
+## Program outputs
+
+- using the --output flag, you can specify the output .wav file you want to save the altered wave to.
+        limited to .wav files
+        limited to files of size less then 70000 data points
+
+        For example:
+                ```poetry run python src/ui/main.py --output src/data/StarWars3.wav```
+        will save the output of the program to the StarWars3.wav file in the src/data/ directory.
+
+
+
+
 
