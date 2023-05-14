@@ -52,8 +52,8 @@ def plot_fourier_transform(transform, axs, plot: int, title):
 
 
 def plot_all(sample_rate, og_wave, transform, altered_transform, noise_reduced_wave):
-    """This function plots the original sound wave, the fourier transform of the original sound wave,
-    the altered fourier transform and the altered sound wave.
+    """This function plots the original sound wave, the fourier transform of the original
+    sound wave, the altered fourier transform and the altered sound wave.
 
     Args:
         sample_rate (int): the sample rate of the audio data

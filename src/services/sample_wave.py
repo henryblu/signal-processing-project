@@ -15,7 +15,8 @@ class SampleWave:
                 Defaults to 256.
             duration (int, optional): the duration of the audio data.
                 Defaults to 1.
-            noise_amplitude (int, optional): the amplitude of the noise to be added to the audio data.
+            noise_amplitude (int, optional): the amplitude of the noise to be added to the
+            audio data.
                 Defaults to 1.
         """
         self.verbose = verbose
