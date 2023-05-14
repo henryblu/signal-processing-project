@@ -17,12 +17,16 @@ There are four testing files which test the classes and functions in src/service
 - ```test_sample_wave.py``` with ```TestSampleWave()``` class for testing ```SampleWave()``` class.
 - ```test_transforms.py``` with ```TestTransforms()``` class for testing ```Transforms()``` class.
 - ```test_transform_alternations.py``` with ```TestTransformAlternations()``` class for testing the functions in ```transform_alternations.py````.
+</n>
 
 Testing is not run on UI elements such as ```flags.py``` and ```visualisations.py``` as these files are graphical and thus should be tested by user vvision rather then unit tests.
+</n>
 
 This Program runs all unit testing using the ```unittest``` library by default with some individual tests being run using the pytest library functions. Functions of the classes are tested using exemplary input. 
+</n>
 
 the following functions are used for individual unit tests:
+
 1. ```pytest.raises``` for testing errors calls such as ```ValueError``` and ```FileError``` and their outputs.
 2. ```.assert np.allclose``` is used to compare list outputs to their correct couterparts.
 3. ```.assertEqual()``` is used for comparing expected and returned values,
@@ -42,13 +46,15 @@ the performance tests can be run from the file ```performance_testing.py``` in t
 
 ### Performance testing contents and strucutre:
 The results of the performance testing are presented in the graphs above.
-
+</n>
 Performance tests have been generate for each of the following algorithms:
+
 1. regular fourier transform
 2. fast fourier transform
 3. bluestines fast fourier transform
 4. inverse regular fourier transform
 5. inverse fast fourier transform
+</n>
 
 Each algorithm has been tested and assesed by measuting the time it takes to return the expected output. Performance testing has been done using ```time``` library. The time was measured by capturing ```start_time = time.time()``` at the beginning of the function call and ```end_time = time.time()``` after the function halts. 
 

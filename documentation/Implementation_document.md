@@ -87,7 +87,7 @@ The following graphs show the time taken by each algorithm to perform a fourier 
 <img src="analysis_graphs\rft vs irft.png" width="500">
 </p>
 from the graph titled ```performance Test for: rft, Bluestines_fft, irft,ifft``` we can see that the rft and its inverse quickly gain long running times as the sample size increases. This is due to the fact that the rft is an O(n^2) algorithm. While the bluestines fft and its inverse are both O(nlogn) algorithms and so they have much better performance. 
-
+</n>
 from the graph titled ```bluestines_fft vs fft``` we can see that the bluestines fft and the fft have very similar performance however the fft only funcitons when the sound wavee is of length 2^n. Here, we can also clearly see that as the sample size goes past a power of 2, the time complexity of bluestines fft increases. This is due to the fact that bluestines fft uses zero padding to which increases the data length to the closest upper power of 2.
 
 other noteble results are as follows:
@@ -103,6 +103,6 @@ There is still quite a few improvements that I would like to make to the program
 
 
 ## Sources
-Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control 1st Edition by Steven L. Brunton & J. Nathan Kutz (chapter 2)
-Noise cancellation with Python and Fourier Transform: https://towardsdatascience.com/noise-cancellation-with-python-and-fourier-transform-97303314aa71
-Bluestein's FFT Algorithm: https://ccrma.stanford.edu/~jos/st/Bluestein_s_FFT_Algorithm.html
+- Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control 1st Edition by Steven L. Brunton & J. Nathan Kutz (chapter 2)
+- Noise cancellation with Python and Fourier Transform: https://towardsdatascience.com/noise-cancellation-with-python-and-fourier-transform-97303314aa71
+- Bluestein's FFT Algorithm: https://ccrma.stanford.edu/~jos/st/Bluestein_s_FFT_Algorithm.html
