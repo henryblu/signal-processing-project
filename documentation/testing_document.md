@@ -33,11 +33,11 @@ the following functions are used for individual unit tests:
 the performance tests can be run from the file ```performance_testing.py``` in the src/tests/ directory.
 ### Performance testing results:
 <p align="center">
-<img src="documentation\graph_analysis\all.png" width="500">
-<img src="documentation\graph_analysis\bluestines_fft vs fft.png" width="500">
-<img src="documentation\graph_analysis\bluestines_fft vs ifft.png" width="500">
-<img src="documentation\graph_analysis\rft vs bluestines_fft.png" width="500">
-<img src="documentation\graph_analysis\rft vs irft.png" width="500">
+<img src="graph_analysis\all.png" width="500">
+<img src="graph_analysis\bluestines_fft vs fft.png" width="500">
+<img src="graph_analysis\bluestines_fft vs ifft.png" width="500">
+<img src="graph_analysis\rft vs bluestines_fft.png" width="500">
+<img src="graph_analysis\rft vs irft.png" width="500">
 </p>
 
 ### Performance testing contents and strucutre:
