@@ -103,3 +103,6 @@ There is still quite a few improvements that I would like to make to the program
 
 
 ## Sources
+Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control 1st Edition by Steven L. Brunton & J. Nathan Kutz (chapter 2)
+Noise cancellation with Python and Fourier Transform: https://towardsdatascience.com/noise-cancellation-with-python-and-fourier-transform-97303314aa71
+Bluestein's FFT Algorithm: https://ccrma.stanford.edu/~jos/st/Bluestein_s_FFT_Algorithm.html
