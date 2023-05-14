@@ -9,9 +9,9 @@ from src.services.sample_wave import SampleWave
 
 
 class PerformanceTesting:
-    def __init__(self) -> None:
+    def __init__(self, iterations = 50) -> None:
         self.titles = []
-        self.iterations = 50
+        self.iterations = iterations
         self.samples = [i * 16 for i in range(1, self.iterations + 1)]
         pass
 
@@ -31,7 +31,7 @@ class PerformanceTesting:
         plt.ylabel(
             "time taken (seconds)", fontdict={"fontsize": 12, "fontweight": "bold"}
         )
-        title_name = "Performance Test for:" + ", ".join(self.titles)
+        title_name = "Performance Test for: " + ", ".join(self.titles)
         plt.title(
             title_name,
             fontdict={"fontsize": 16, "fontweight": "bold"},
@@ -137,5 +137,5 @@ class PerformanceTesting:
 
 
 if __name__ == "__main__":
-    pt = PerformanceTesting()
-    pt.run(rft = True, fft = True)
+    pt = PerformanceTesting(500)
+    pt.run(rft = False, bluestines= True, irft = False, ifft = True)
