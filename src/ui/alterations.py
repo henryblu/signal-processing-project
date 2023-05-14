@@ -1,4 +1,4 @@
-from src.services.transform_alternations import (
+from services.transform_alternations import (
     high_pitch_reduction,
     low_pitch_reduction,
     noise_reduction,

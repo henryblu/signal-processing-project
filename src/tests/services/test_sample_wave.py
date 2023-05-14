@@ -23,18 +23,8 @@ class TestSampleWave(unittest.TestCase):
             (self.sample_wave.sample_rate * self.sample_wave.duration,),
         )
 
-    def test_add_noise(self):
-        noisy_audio_data = self.sample_wave.add_noise(
-            5, self.sample_wave.get_audio_data()
-        )
-        self.assertEqual(
-            noisy_audio_data.shape, self.sample_wave.get_audio_data().shape
-        )
-
     def test_output(self):
-        self.sample_wave.output(
-            self.sample_wave.get_audio_data(), r"src/tests/Data/test_output.wav"
-        )
+        self.sample_wave.output(r"src/tests/Data/test_output.wav")
         file_data = wav.read(r"src/tests/Data/test_output.wav")[1]
         self.assertEqual(file_data.shape, self.sample_wave.get_audio_data().shape)
         np.allclose(file_data, self.sample_wave.get_audio_data())
@@ -42,9 +32,7 @@ class TestSampleWave(unittest.TestCase):
         with pytest.raises(
             FileNotFoundError, match="The specified output path does not exist."
         ):
-            self.sample_wave.output(
-                self.sample_wave.get_audio_data(), r"spc/sql/no_work/please.wav"
-            )
+            self.sample_wave.output(r"spc/sql/no_work/please.wav")
 
     def tearDown(self):
         pass

@@ -3,7 +3,7 @@ import sys
 
 # this is used to import the modules from the parent directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from services.audio_file_processing import AudioFileProcessing
+from services.audio_file_wave import AudioWave
 from services.sample_wave import SampleWave
 from services.transforms import Transforms
 from ui.visualisations import plot_all
@@ -19,21 +19,21 @@ def main():
     flags = flags_finder()
 
     if flags.input is not None:
-        processing = AudioFileProcessing(
+        wave = AudioWave(
             input_file=flags.input,
             output_file=flags.output,
             verbose=flags.verbose,
         )
     else:
-        processing = SampleWave(verbose=flags.verbose)
+        wave = SampleWave(verbose=flags.verbose)
+    sample_rate = wave.get_sample_rate()
+    audio_data = wave.get_audio_data()
 
     t = Transforms(
         flags.discrete_fourier_transform,
         flags.fast_fourier_transform,
         flags.verbose,
     )
-    sample_rate = processing.get_sample_rate()
-    audio_data = processing.get_audio_data()
 
     og_fourier = t.run_transform(audio_data)
     altered_fourier = run_alterations(og_fourier)
@@ -50,8 +50,8 @@ def main():
     if flags.verbose:
         print()
         print("outputting composite wave to file: " + flags.output + "\n")
-
-    processing.output(altered_signal, output_file=flags.output)
+    wave.set_audio_data(altered_signal)
+    wave.output(output_file=flags.output)
 
     return
 

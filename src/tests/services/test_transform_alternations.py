@@ -12,7 +12,7 @@ from src.services.transform_alternations import (
 class TestTransformAlternations(unittest.TestCase):
     def setUp(self):
         self.sample_wave = SampleWave(sample_rate=20000)
-        self.transform = np.fft.fft(self.sample_wave.generate_composite_wave())
+        self.transform = np.fft.fft(self.sample_wave.get_audio_data())
 
     def test_high_pitch_reduction(self):
         high_pitch_reduction_audio_data = high_pitch_reduction(self.transform, 20000)
