@@ -2,7 +2,7 @@ import unittest
 import pytest
 import numpy as np
 from scipy.io import wavfile as wav
-from src.services.file_processing import AudioFileProcessing
+from services.audio_file_processing import AudioFileProcessing
 
 
 class TestAudioFileProcessing(unittest.TestCase):

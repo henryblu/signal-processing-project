@@ -3,7 +3,7 @@ import sys
 
 # this is used to import the modules from the parent directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from services.file_processing import AudioFileProcessing
+from services.audio_file_processing import AudioFileProcessing
 from services.sample_wave import SampleWave
 from services.transforms import Transforms
 from ui.visualisations import plot_all
