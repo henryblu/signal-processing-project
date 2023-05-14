@@ -27,9 +27,9 @@ def flags_finder():
         action="store_true",
     )
     parser.add_argument(
-        "-r",
-        "--regular_fourier_transform",
-        help="specifies the regular fourier transform to be used",
+        "-d",
+        "--discrete_fourier_transform",
+        help="specifies the discrete fourier transform to be used",
         action="store_true",
     )
     parser.add_argument(
@@ -38,12 +38,6 @@ def flags_finder():
         help="specifies the fast fourier transform to be used",
         action="store_true",
     )
-    parser.add_argument(
-        "-t",
-        "--performance_test",
-        help="specifies the number of samples to be used in the performance test. Default is 0",
-        type=int,
-        default=0,
-    )
+
     args = parser.parse_args()
     return args
