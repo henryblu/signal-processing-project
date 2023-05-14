@@ -41,7 +41,9 @@ using the --input flag, you can specify the input .wav file you want to decompos
 - limited to files of size less then 70000 data points
 
 - For example:
+
         poetry run python src/ui/main.py --input src/data/StarWars3.wav
+
 - will run the program on the StarWars3.wav file in the src/data/ directory.
 
 - if no input is specified, the program will generate a random composite wave of 3 frequencies.
@@ -53,7 +55,9 @@ using the --output flag, you can specify the output .wav file you want to save t
 - limited to files of size less then 70000 data points
 
 - For example:
+
         poetry run python src/ui/main.py --output src/data/StarWars3.wav
+
 - will save the output of the program to the StarWars3.wav file in the src/data/ directory.
 
 
