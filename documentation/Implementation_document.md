@@ -74,7 +74,7 @@ The functions are as follows:
 example output of the program:
 in this example, we perform a noise reduction on the starwars3.wav file. Here, the threashold is set to 50% of the highest intensity frequency. The original audio data is plotted on top, the original and altered fourier transforms are plotted in the middle and the altered audio data is plotted on the bottom. 
 
-<img src="documentation\sample_outputs\example noise reduction on the starwars3.wav file.png" width="400">
+<img src="sample_outputs\example noise reduction on the starwars3.wav file.png" width="400">
 
 ## Performance
 The following graphs show the time taken by each algorithm to perform a fourier transform on a sample wave of differeing sample sizes.
