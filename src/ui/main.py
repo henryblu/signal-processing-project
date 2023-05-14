@@ -18,11 +18,6 @@ def main():
     functions"""
     flags = flags_finder()
 
-    """if flags.performance_test != 0:
-        p_test = performance_test(samples=flags.performance_test, verbose=flags.verbose)
-        p_test.run()
-        return
-    """
     if flags.input is not None:
         processing = AudioFileProcessing(
             input_file=flags.input,
@@ -33,18 +28,15 @@ def main():
         processing = SampleWave(verbose=flags.verbose)
 
     t = Transforms(
-        flags.regular_fourier_transform,
+        flags.discrete_fourier_transform,
         flags.fast_fourier_transform,
         flags.verbose,
     )
-
-    audio_data = processing.get_audio_data()
     sample_rate = processing.get_sample_rate()
+    audio_data = processing.get_audio_data()
 
     og_fourier = t.run_transform(audio_data)
-
     altered_fourier = run_alterations(og_fourier)
-
     altered_signal = t.run_inverse(altered_fourier)
 
     plot_all(
