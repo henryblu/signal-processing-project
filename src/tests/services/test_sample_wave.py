@@ -2,7 +2,7 @@ import unittest
 import pytest
 import numpy as np
 from scipy.io import wavfile as wav
-from src.services.sample_wave import SampleWave
+from services.sample_wave import SampleWave
 
 
 class TestSampleWave(unittest.TestCase):
