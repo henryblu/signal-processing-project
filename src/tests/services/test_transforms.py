@@ -1,8 +1,8 @@
 import unittest
 import numpy as np
 import pytest
-from services.transforms import Transforms
-from services.sample_wave import SampleWave
+from src.services.transforms import Transforms
+from src.services.sample_wave import SampleWave
 
 
 class TestTransforms(unittest.TestCase):

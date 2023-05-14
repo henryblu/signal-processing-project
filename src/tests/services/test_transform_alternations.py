@@ -1,8 +1,8 @@
 import unittest
 import numpy as np
 
-from services.sample_wave import SampleWave
-from services.transform_alternations import (
+from src.services.sample_wave import SampleWave
+from src.services.transform_alternations import (
     high_pitch_reduction,
     low_pitch_reduction,
     noise_reduction,
