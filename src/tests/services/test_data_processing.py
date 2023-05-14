@@ -27,6 +27,13 @@ class TestAudioFileProcessing(unittest.TestCase):
     def test_get_audio_data(self):
         self.assertIsInstance(self.audio_file_processing.get_audio_data(), np.ndarray)
 
+    def test_set_audio_data(self):
+        self.audio_file_processing.set_audio_data(self.audio_file_processing.audio_data)
+        self.assertTrue(
+            len(self.audio_file_processing.get_audio_data())
+            == self.audio_file_processing.length
+        )
+
     def test_get_sample_rate(self):
         self.assertIsInstance(self.audio_file_processing.get_sample_rate(), int)
 

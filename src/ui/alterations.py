@@ -1,4 +1,4 @@
-from services.transform_alternations import (
+from src.services.transform_alternations import (
     high_pitch_reduction,
     low_pitch_reduction,
     noise_reduction,
@@ -49,9 +49,7 @@ def options(old_fourier_transform):
         print("1. High Pitch Reduction")
         print("2. Low Pitch Reduction")
         print("3. Noise Reduction")
-        print("4. No Alteration")
         print()
-
         user_input = input(
             "Please enter the number of the option you would like to perform: "
         )
@@ -65,9 +63,7 @@ def options(old_fourier_transform):
         if user_input == "3":
             altered_fourier_transform = call_nr(old_fourier_transform)
             break
-        if user_input == "4":
-            altered_fourier_transform = old_fourier_transform
-            break
+        
         print("Invalid input, please try again")
         print()
 

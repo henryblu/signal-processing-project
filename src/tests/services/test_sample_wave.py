@@ -12,6 +12,12 @@ class TestSampleWave(unittest.TestCase):
     def test_get_audio_data(self):
         np.allclose(self.sample_wave.get_audio_data(), self.sample_wave.audio_data)
 
+    def test_set_audio_data(self):
+        self.sample_wave.set_audio_data(np.array([1, 2, 3]))
+        self.assertTrue(
+            np.all(self.sample_wave.get_audio_data() == np.array([1, 2, 3]))
+        )
+
     def test_get_sample_rate(self):
         self.assertEqual(
             self.sample_wave.get_sample_rate(), self.sample_wave.sample_rate

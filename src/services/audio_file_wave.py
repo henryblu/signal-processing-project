@@ -29,6 +29,7 @@ class AudioWave:
         self.back_trim = 0
         self.noise_level = 0.1
         self.sample_rate, self.audio_data = self.read_data(input_file)
+        self.length = len(self.audio_data)
         self.data_triming()
 
     def get_audio_data(self):
