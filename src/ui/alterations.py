@@ -10,7 +10,7 @@ def run_alterations(old_fourier_transform):
     like to perform
 
     Args:
-        fourier_transform (np.array): the fourier transform to be altered
+        old_fourier_transform (np.array): the fourier transform to be altered
 
     Returns:
         np.array: the altered fourier transform
@@ -38,7 +38,7 @@ def options(old_fourier_transform):
     """This function lets the user choose which alteration they would like to perform
 
     Args:
-        fourier_transform (np.array): the fourier transform to be altered
+        old_fourier_transform (np.array): the fourier transform to be altered
 
     Returns:
         np.array: the altered fourier transform
@@ -63,7 +63,7 @@ def options(old_fourier_transform):
         if user_input == "3":
             altered_fourier_transform = call_nr(old_fourier_transform)
             break
-        
+
         print("Invalid input, please try again")
         print()
 

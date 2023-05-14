@@ -10,8 +10,6 @@ from ui.visualisations import plot_all
 from ui.flags import flags_finder
 from ui.alterations import run_alterations
 
-# from tests.performance_test import performance_test
-
 
 def main():
     """This function is the main function of the program it is used to call all the other

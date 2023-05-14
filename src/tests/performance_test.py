@@ -10,14 +10,25 @@ from src.services.sample_wave import SampleWave
 
 
 class PerformanceTesting:
+    """This class is used to run the performance tests"""
+
     def __init__(self, iterations=50) -> None:
+        """This function is used to initialise the PerformanceTesting class"""
         self.titles = []
         self.iterations = iterations
         self.samples = [i * 16 for i in range(1, self.iterations + 1)]
         pass
 
     def run(self, dft=False, fft=False, bluestines=False, idft=False, ifft=False):
-        """This function is used to run the performance tests"""
+        """This function is used to run the performance tests
+
+        Args:
+            dft (bool, optional): This is used to determine if the dft performance test should be run. Defaults to False.
+            fft (bool, optional): This is used to determine if the fft performance test should be run. Defaults to False.
+            bluestines (bool, optional): This is used to determine if the bluestines fft performance test should be run. Defaults to False.
+            idft (bool, optional): This is used to determine if the idft performance test should be run. Defaults to False.
+            ifft (bool, optional): This is used to determine if the ifft performance test should be run. Defaults to False.
+        """
 
         self.ptest_dft(dft)
         self.ptest_fft(fft)
@@ -44,6 +55,11 @@ class PerformanceTesting:
         plt.show()
 
     def ptest_dft(self, used=False):
+        """This function is used to test the dft function in the transforms class
+
+        Args:
+            used (bool, optional): This is used to determine if the dft performance test should be run. Defaults to False.
+        """
         if not used:
             return
         self.titles.append("dft")
@@ -62,6 +78,9 @@ class PerformanceTesting:
     def ptest_fft(self, used=False):
         """This function is used to test the fft function in the transforms class it only uses
         inputs of size 2^n as those are the only inputs that the fft function can handle.
+
+        Args:
+            used (bool, optional): This is used to determine if the fft performance test should be run. Defaults to False.
         """
         if not used:
             return
@@ -81,6 +100,11 @@ class PerformanceTesting:
         plt.plot(self.samples, fft_time, label="fft", color="green")
 
     def ptest_bluestines_fft(self, used=False):
+        """This function is used to test the bluestines fft function in the transforms class
+
+        Args:
+            used (bool, optional): This is used to determine if the bluestines fft performance test should be run. Defaults to False.
+        """
         if not used:
             return
         self.titles.append("bluestines_fft")
@@ -102,6 +126,11 @@ class PerformanceTesting:
         plt.plot(self.samples, fft_time, label="bluestines_fft", color="blue")
 
     def ptest_idft(self, used=False):
+        """This function is used to test the idft function in the transforms class
+
+        Args:
+            used (bool, optional): This is used to determine if the idft performance test should be run. Defaults to False.
+        """
         if not used:
             return
         self.titles.append("idft")
@@ -119,6 +148,11 @@ class PerformanceTesting:
         plt.plot(self.samples, idft_time, label="idft", color="orange")
 
     def ptest_ifft(self, used=False):
+        """This function is used to test the ifft function in the transforms class
+
+        Args:
+            used (bool, optional): This is used to determine if the ifft performance test should be run. Defaults to False.
+        """
         if not used:
             return
         self.titles.append("ifft")

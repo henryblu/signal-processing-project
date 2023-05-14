@@ -42,8 +42,8 @@ class TestAudioFileProcessing(unittest.TestCase):
         self.assertIsInstance(self.audio_file_processing.back_trim, int)
 
     def test_output(self):
-        # clear the output file located at src/Data/output.wav
         wav.write(r"src/tests/Data/test_output.wav", 0, np.zeros((1,)))
+
         self.audio_file_processing.output(r"src/tests/Data/test_output.wav")
         np.allclose(
             self.audio_file_processing.get_audio_data(),

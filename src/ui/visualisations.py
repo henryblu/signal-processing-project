@@ -6,8 +6,11 @@ def plot_sound_wave(time, og_wave, axs, plot: int, title):
     """this function plots a given sound wave using its sample rate and the audio data.
 
     Args:
-        sample_rate (int): the sample rate of the audio data
-        audio_data (np.array): the audio data to be plotted
+        time (np.array): the time of the audio data
+        og_wave (np.array): the audio data
+        axs (matplotlib.pyplot.subplots): the subplots to plot the data on
+        plot (int): the plot to plot the data on
+        title (str): the title of the plot
     """
 
     try:
@@ -24,6 +27,9 @@ def plot_fourier_transform(transform, axs, plot: int, title):
 
     Args:
         fourier_transform (np.array): the fourier transform of the audio data
+        axs (matplotlib.pyplot.subplots): the subplots to plot the data on
+        plot (int): the plot to plot the data on
+        title (str): the title of the plot
     """
 
     try:
@@ -46,20 +52,20 @@ def plot_fourier_transform(transform, axs, plot: int, title):
 
 
 def plot_all(sample_rate, og_wave, transform, altered_transform, noise_reduced_wave):
-    """this function plots the originafourier_transforml sound wave, the transformed sound wave and
-    the fourier transform side by side
+    """This function plots the original sound wave, the fourier transform of the original sound wave,
+    the altered fourier transform and the altered sound wave.
 
     Args:
         sample_rate (int): the sample rate of the audio data
         og_wave (np.array): the original audio data
-        transform (np.array): the fourier transform of the audio data
+        transform (np.array): the fourier transform of the original audio data
+        altered_transform (np.array): the altered fourier transform of the original audio data
+        noise_reduced_wave (np.array): the altered audio data
     """
     fig, axs = plt.subplots(4, 1)
     fig.subplots_adjust(hspace=2)
-    # make the subplots bigger
     fig.set_size_inches(10, 6)
     time = np.linspace(0, len(og_wave) / sample_rate, num=len(og_wave))
-    # make the noise reduced wave the same length as the original wave
     noise_reduced_wave = noise_reduced_wave[: len(og_wave)]
 
     plot_sound_wave(time, og_wave, axs, plot=0, title="Original Sound Wave")

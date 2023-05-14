@@ -17,11 +17,6 @@ class AudioWave:
                 Defaults to (r"src/data/output.wav").
             verbose (bool, optional): whether or not to print verbose output.
                 Defaults to False.
-
-        Raises:
-            ValueError: if the input file is not a .wav file
-            FileNotFoundError: if the input file is not found
-            ValueError: if the input file is too long
         """
         self.output_file = output_file
         self.verbose = verbose
@@ -96,7 +91,7 @@ class AudioWave:
         if no file is specified then the default file is used
 
         Args:
-            new_sound_wave (numpy array): the new sound wave to be outputted
+            output_file (str, optional): the path to the output file.
 
         Raises:
             FileNotFoundError: if the output file path is not found
