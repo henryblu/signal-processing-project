@@ -4,6 +4,7 @@ import numpy as np
 from scipy.io import wavfile as wav
 from src.services.audio_file_processing import AudioFileProcessing
 
+
 class TestAudioFileProcessing(unittest.TestCase):
     def setUp(self):
         with pytest.raises(ValueError, match="input file must be a .wav file"):

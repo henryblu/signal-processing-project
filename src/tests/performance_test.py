@@ -1,27 +1,28 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-import sys 
-import os 
-sys.path.append(os.path.abspath(os.path.join('../..')))
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join("../..")))
 from src.services.transforms import Transforms
 from src.services.sample_wave import SampleWave
 
 
 class PerformanceTesting:
-    def __init__(self, iterations = 50) -> None:
+    def __init__(self, iterations=50) -> None:
         self.titles = []
         self.iterations = iterations
         self.samples = [i * 16 for i in range(1, self.iterations + 1)]
         pass
 
-    def run(self, rft=False, fft=False, bluestines=False, irft=False, ifft=False):
+    def run(self, dft=False, fft=False, bluestines=False, idft=False, ifft=False):
         """This function is used to run the performance tests"""
 
-        self.ptest_rft(rft)
+        self.ptest_dft(dft)
         self.ptest_fft(fft)
         self.ptest_bluestines_fft(bluestines)
-        self.ptest_irft(irft)
+        self.ptest_idft(idft)
         self.ptest_ifft(ifft)
 
         plt.xlabel(
@@ -42,22 +43,21 @@ class PerformanceTesting:
         plt.legend(fontsize=12)
         plt.show()
 
-
-    def ptest_rft(self, used=False):
+    def ptest_dft(self, used=False):
         if not used:
             return
-        self.titles.append("rft")
-        t = Transforms(rft=True, fft=False, verbose=False)
-        rft_time = []
+        self.titles.append("dft")
+        t = Transforms(dft=True, fft=False, verbose=False)
+        dft_time = []
         for i in range(1, self.iterations + 1):
-            print("running rft iteration: " + str(i) + " of " + str(self.iterations))
+            print("running dft iteration: " + str(i) + " of " + str(self.iterations))
             sample_wave = SampleWave(verbose=False, duration=i, sample_rate=16)
             audio_data = sample_wave.get_audio_data()
             start = time.time()
             t.run_transform(audio_data)
             end = time.time()
-            rft_time.append(end - start)
-        plt.plot(self.samples, rft_time, label="rft", color="red")
+            dft_time.append(end - start)
+        plt.plot(self.samples, dft_time, label="dft", color="red")
 
     def ptest_fft(self, used=False):
         """This function is used to test the fft function in the transforms class it only uses
@@ -66,7 +66,7 @@ class PerformanceTesting:
         if not used:
             return
         self.titles.append("fft")
-        t = Transforms(rft=False, fft=True, verbose=False)
+        t = Transforms(dft=False, fft=True, verbose=False)
         fft_time = np.zeros(self.iterations)
         max_size = self.iterations
         max_power_of_two = int(np.log2(max_size))
@@ -84,7 +84,7 @@ class PerformanceTesting:
         if not used:
             return
         self.titles.append("bluestines_fft")
-        t = Transforms(rft=False, fft=True, verbose=False)
+        t = Transforms(dft=False, fft=True, verbose=False)
         fft_time = []
         for i in range(1, self.iterations + 1):
             print(
@@ -101,28 +101,28 @@ class PerformanceTesting:
             fft_time.append(end - start)
         plt.plot(self.samples, fft_time, label="bluestines_fft", color="blue")
 
-    def ptest_irft(self, used=False):
+    def ptest_idft(self, used=False):
         if not used:
             return
-        self.titles.append("irft")
-        t = Transforms(rft=True, fft=False, verbose=False)
-        irft_time = []
+        self.titles.append("idft")
+        t = Transforms(dft=True, fft=False, verbose=False)
+        idft_time = []
         for i in range(1, self.iterations + 1):
-            print("running irft iteration: " + str(i) + " of " + str(self.iterations))
+            print("running idft iteration: " + str(i) + " of " + str(self.iterations))
             sample_wave = SampleWave(verbose=False, duration=i, sample_rate=16)
             audio_data = sample_wave.get_audio_data()
             fourier = np.fft.fft(audio_data)
             start = time.time()
             t.run_inverse(fourier)
             end = time.time()
-            irft_time.append(end - start)
-        plt.plot(self.samples, irft_time, label="irft", color="orange")
+            idft_time.append(end - start)
+        plt.plot(self.samples, idft_time, label="idft", color="orange")
 
     def ptest_ifft(self, used=False):
         if not used:
             return
         self.titles.append("ifft")
-        t = Transforms(rft=False, fft=True, verbose=False)
+        t = Transforms(dft=False, fft=True, verbose=False)
         ifft_time = []
         for i in range(1, self.iterations + 1):
             print("running ifft iteration: " + str(i) + " of " + str(self.iterations))
@@ -138,4 +138,4 @@ class PerformanceTesting:
 
 if __name__ == "__main__":
     pt = PerformanceTesting(500)
-    pt.run(rft = False, bluestines= True, irft = False, ifft = True)
+    pt.run(dft=False, bluestines=True, idft=False, ifft=True)

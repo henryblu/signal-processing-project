@@ -4,11 +4,11 @@ import numpy as np
 class Transforms:
     """this class is used to perform fourier transforms on a given audio data"""
 
-    def __init__(self, rft, fft, verbose=False):
+    def __init__(self, dft, fft, verbose=False):
         """this function is used to initialize the class
 
         Args:
-            rft (bool): if true the regular fourier transform will be used
+            dft (bool): if true the discrete fourier transform will be used
             fft (bool): if true the fast fourier transform will be used
             audio_data (np.array): the audio data
             verbose (bool, optional): if true the class will print out information.
@@ -16,9 +16,9 @@ class Transforms:
         """
         self.verbose = verbose
         self.fourier_transform = None
-        if rft and fft:
-            raise ValueError("both rft and fft cannot be true")
-        self.transform_type = "rft" if rft else "fft"
+        if dft and fft:
+            raise ValueError("both dft and fft cannot be true")
+        self.transform_type = "dft" if dft else "fft"
 
     def run_transform(self, audio_data):
         """this function runs the correct type of fourier transform on the audio data
@@ -29,8 +29,8 @@ class Transforms:
         Returns:
             np.array: the fourier transform of the audio data
         """
-        if self.transform_type == "rft":
-            self.fourier_transform = self.regular_fourier_transform(audio_data)
+        if self.transform_type == "dft":
+            self.fourier_transform = self.discrete_fourier_transform(audio_data)
 
         else:
             if np.log2(len(audio_data)) % 1 != 0:
@@ -54,15 +54,15 @@ class Transforms:
             np.array: the inverse fourier transform of the fourier transform
         """
 
-        if self.transform_type == "rft":
-            inverse = self.inverse_regular_fourier_transform(fourier_transform)
+        if self.transform_type == "dft":
+            inverse = self.inverse_discrete_fourier_transform(fourier_transform)
         else:
             inverse = self.inverse_fast_fourier_transform(fourier_transform)
         inverse = np.real(inverse)
 
         return inverse
 
-    def regular_fourier_transform(self, audio_data):
+    def discrete_fourier_transform(self, audio_data):
         """this function performs a regualr fourier transform on a given audio data
 
         Args:
@@ -130,8 +130,8 @@ class Transforms:
             [even + factor[: N // 2] * odd, even + factor[N // 2 :] * odd]
         )
 
-    def inverse_regular_fourier_transform(self, fourier_transform):
-        """this function performs an inverse regular fourier transform on a given fourier transform
+    def inverse_discrete_fourier_transform(self, fourier_transform):
+        """this function performs an inverse discrete fourier transform on a given fourier transform
 
         Args:
             fourier_transform (np.array): the fourier transform to be transformed

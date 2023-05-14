@@ -17,7 +17,7 @@ class TestTransforms(unittest.TestCase):
 
     def test_init(self):
         """this function tests the init function"""
-        with pytest.raises(ValueError, match="both rft and fft cannot be true"):
+        with pytest.raises(ValueError, match="both dft and fft cannot be true"):
             Transforms(True, True)
 
     def test_run_transform(self):
